@@ -1,37 +1,38 @@
+
+    {{-- @dd(Session::all()) --}}
+
+
 <x-template title="Dashboard">
 
-    {{-- @dd($role_aktif) --}}
-
-    <section class="min-h-screen">
-        {{-- <h3>Opsi Dashboard</h3> --}}
-        {{-- TODO Pilihan Dashboard --}}
-        {{-- <a href=""></a> --}}
-
-        <h1>Selamat Datang, {{ $user->nama }}</h1>
-        <h2>Anda login sebagai: {{ $role_aktif[0]->nama_role }}</h2>
-
-        {{-- Tampilkan semua data- data yang ada didatabase
-            1. Daftar Jenis Hewan
-            2. Daftar Ras Hewan
-            3. Daftar Kategori
-            4. Daftar Kategori klinis
-            5. Daftar Kode Tindakan terapi
-            6. Daftar pet
-            7. Daftar Role
-            8. Daftar User dengan Rolenya masing-masing
-         --}}
-
-        <div class="grid gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4">
-            <x-dashboard.functionCard href="{{ route('user-data') }}" title="Data User" description="Edit Users data in here" />
-            <x-dashboard.functionCard href="{{ route('jenis-hewan-data') }}" title="Jenis Hewan" description="View and Edit Jenis Hewan Here" />
-            <x-dashboard.functionCard href="{{ route('ras-hewan-data') }}" title="Ras Hewan" description="View and Edit Ras Hewan" />
-            <x-dashboard.functionCard href="{{ route('kategori-data') }}" title="Kategori" description="View and Edit Kategori" />
-            <x-dashboard.functionCard href="{{ route('kategori-klinis-data') }}" title="Kategori Klinis" description="View and Edit Kategori Klinis" />
-            <x-dashboard.functionCard href="{{ route('kategori-tindakan-terapi') }}" title="Kode Tindakan Terapi" description="View and Edit Kode Tindakan Terapi" />
-            <x-dashboard.functionCard href="{{ '#' }}" title="Pet" description="Edit Pet data in here" />
-            <x-dashboard.functionCard href="{{ '#' }}" title="Role" description="Edit Role data in here" />
+    {{-- @dd(Session::get('role_name')) --}}
+    @if ($role_id == '1' || $role_id == '2' || $role_id == '3' || $role_id == '4')
+    <div class="flex justify-between">
+        <div>
+            <h1>Selamat Datang, {{ Auth::user()->nama }}</h1>
+            <h2>Anda login sebagai: {{ Session::get('role_name') }}</h2>
         </div>
-        
-    </section>
+        <a href="/logout" class="px-3 py-1 max-h-fit bg-red-300 text-red-600 hover:bg-red-500 hover:text-red-700 rounded-md">logout</a>
+    </div>
+    @endif
+    
+    @switch($role_id)
+        @case('1')
+            @include('pages.dashboard.administrator')
+            @break
+        @case('2')
+            @include('pages.dashboard.dokter')
+            @break
+        @case('3')
+            @include('pages.dashboard.perawat')
+            @break
+        @case('4')
+            @include('pages.dashboard.resepsionis')
+            @break
+        @case('5')
+            @include('pages.dashboard.pemilik')
+            @break
+        @default
+            <h1>401 - Unauthorized</h1>
+    @endswitch
 
 </x-template>

@@ -18,7 +18,7 @@
     <x-layout.nav />
 
     {{-- Konten utama --}}
-    <main class="flex-1 container mx-auto px-4 py-8">
+    <main class="flex-1 container mx-auto px-4 py-8 min-h-screen">
         {{ $slot }}
     </main>
 

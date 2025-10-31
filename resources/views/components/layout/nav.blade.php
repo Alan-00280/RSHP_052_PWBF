@@ -22,7 +22,7 @@
             <x-layout.navLink href="#">Pelatihan</x-layout.navLink>
         </li>
         <li> {{-- todo Ubah Teks Tombol Login Saat sudah Login usernya --}}
-            <x-layout.navLink href="/dashboard">{{ (true) ? 'Dashboard' : 'Login' }}</x-layout.navLink>
+            <x-layout.navLink href="/{{ (Auth::user()) ? 'dashboard' : 'login' }}">{{ (Auth::user()) ? 'Dashboard' : 'Login' }}</x-layout.navLink>
         </li>
     </ul>
 </nav>
