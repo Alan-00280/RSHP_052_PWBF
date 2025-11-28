@@ -82,7 +82,9 @@ class dashboardController extends Controller
         return view(
             'pages.kodeTindakanTerapi',
             [
-                'therapies' => KodeTindakanTerapi::with(['Kategori', 'KategoriKlinis'])->get()
+                'therapies' => KodeTindakanTerapi::with(['Kategori', 'KategoriKlinis'])->paginate(10),
+                'kategories' => Kategori::all(),
+                'kategori_klinises' => KategoriKlinis::all()
             ]
         );
     }

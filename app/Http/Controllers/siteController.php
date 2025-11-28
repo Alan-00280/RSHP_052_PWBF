@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailRekamMedis;
+use App\Models\Kategori;
+use App\Models\KategoriKlinis;
+use App\Models\KodeTindakanTerapi;
 use App\Models\Pet;
 use App\Models\RekamMedis;
 use Auth;
@@ -78,5 +81,13 @@ class siteController extends Controller
             'detil_rekam_medis' => $detil_rekam_medis
         ]);
 
+    }
+
+    public function showKodeTindakan(Request $request, $id) {
+        return view('pages.showKodeTindakanTerapi', [
+            'tindakan_detail' => KodeTindakanTerapi::where('idkode_tindakan_terapi', $id)->with(['Kategori', 'KategoriKlinis'])->first(),
+            'kategori_klinises' => KategoriKlinis::all(),
+            'kategories' => Kategori::all()
+        ]);
     }
 }

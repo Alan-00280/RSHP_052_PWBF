@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\jenisHewan;
 use App\Models\Kategori;
 use App\Models\KategoriKlinis;
+use App\Models\KodeTindakanTerapi;
 use App\Models\Pemilik;
 use App\Models\Pet;
 use App\Models\rasHewan;
@@ -207,6 +208,45 @@ class masterController extends validationController
             return redirect()->back()->with('success', 'Berhasil menghapus kategori');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function updateKodeTindakan(Request $request, $id) {
+        $validated = $this->validateTindakan($request);
+        try {
+            $tindakan = KodeTindakanTerapi::findOrFail($id);
+            $tindakan->update([
+                'deskripsi_tindakan_terapi' => $validated['deskripsi_tindakan_terapi'],
+                'idkategori' => $validated['idkategori'],
+                'idkategori_klinis' => $validated['idkategori_klinis']
+            ]);
+            return redirect()->back()->with('success', 'Berhasil mengupdate kode tindakan');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function createKodeTindakan(Request $request) {
+        $validated = $this->validateTindakan($request);
+        try {
+            KodeTindakanTerapi::create([
+                'deskripsi_tindakan_terapi' => $validated['deskripsi_tindakan_terapi'],
+                'idkategori' => $validated['idkategori'],
+                'idkategori_klinis' => $validated['idkategori_klinis']
+            ]);
+            return redirect()->route('kategori-tindakan-terapi')->with('success', 'Berhasil membuat kode tindakan');
+        } catch (\Exception $e) {
+            return redirect()->route('kategori-tindakan-terapi')->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteKodeTindakan(Request $request, $id)  {
+        try {
+            $tindakan = KodeTindakanTerapi::findOrFail($id);
+            $tindakan->delete();
+            return redirect()->route('kategori-tindakan-terapi')->with('success', 'Berhasil menghapus kode tindakan');
+        } catch (\Exception $e) {
+            return redirect()->route('kategori-tindakan-terapi')->with('error', 'Gagal menyimpan: ' . $e->getMessage());
         }
     }
 

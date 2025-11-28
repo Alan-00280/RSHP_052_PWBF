@@ -61,6 +61,7 @@ Route::middleware([])->prefix('/dashboard')->group(function () {
 Route::middleware('isAdmin')->group(function () {
     Route::get('/dashboard/create-user', [siteController::class, 'maintenanced'])->name('create-user-page');
     Route::get('/dashboard/create-jenis-hewan', [siteController::class, 'createJenisHewan'])->name('create-jenishewan-page');
+    Route::get('/dashboard/kode-tindakan/{id}', [siteController::class, 'showKodeTindakan'])->name('edit-kode-tindakan');
 });
 
 Route::middleware('isResepsionis')->prefix('/resepsionis')->group(function () {
@@ -83,6 +84,10 @@ Route::middleware('isAdmin')->group(function () {
     Route::patch('/update-kategori-klinis/{id}', [masterController::class, 'updateKategoriKlinis'])->name('update-kategori-klinis');
     Route::post('/create-kategori-klinis', [masterController::class, 'createKategoriKlinis'])->name('create-kategori-klinis');
     Route::delete('/delete-kategori-klinis/{id}', [masterController::class, 'deleteKategoriKlinis'])->name('delete-kategori-klinis');
+
+    Route::patch('/update-kode-tindakan/{id}', [masterController::class, 'updateKodeTindakan'])->name('update-kode-tindakan');
+    Route::post('/create-kode-tindakan', [masterController::class, 'createKodeTindakan'])->name('create-kode-tindakan');
+    Route::delete('/delete-kode-tindakan/{id}', [masterController::class, 'deleteKodeTindakan'])->name('delete-kode-tindakan');
 });
 
 Route::middleware('isResepsionis')->group(function () {

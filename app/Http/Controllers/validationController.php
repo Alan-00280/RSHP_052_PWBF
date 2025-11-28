@@ -55,4 +55,12 @@ class validationController extends Controller
             'alamat' => 'required|min:3|max:255|string',
         ]);
     }
+
+    protected function validateTindakan(Request $request) {
+        return $request->validate([
+            'deskripsi_tindakan_terapi' => 'min:3|required|max:255|string',
+            'idkategori' => 'string|required',
+            'idkategori_klinis' => 'string|required',
+        ]);
+    }
 }
