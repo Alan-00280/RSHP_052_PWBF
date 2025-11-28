@@ -61,28 +61,27 @@
                                         </div>
                                     </td>
                                     </form>
-                                    <td class="px-4 py-2 gap-2" style="display: flex; align-items: center;">
+                                    <td class="px-4 py-3 gap-2" style="display: flex; align-items: center;">
                                         <button form="form-update-{{ $category->idkategori }}" type="submit"
-                                        class="btn btn-primary">
+                                        class="btn btn-primary p-2">
                                             <span class="mdi mdi-content-save-outline"></span> Update
+                                        </button>
+                                        
+                                        <button form="form-update-{{ $category->idkategori }}" type="reset"
+                                            class="btn btn-primary p-2"
+                                            onclick="changeIdStarred('{{ $category->idkategori }}', true)">
+                                            <span class="mdi mdi-backup-restore"></span> Reset
                                         </button>
 
                                         {{-- Delete buton --}}
                                         <button 
                                         data-id="{{ $category->idkategori }}"
                                         data-nama="{{ $category->nama_kategori }}"
-                                        type="submit"
-                                        class="btn btn-danger text-white btn-delete"
+                                        class="btn btn-danger text-white btn-delete p-2"
                                         role="button" 
                                         data-bs-toggle="modal"
                                         data-bs-target="#confirm-delete-model"
                                         ><span class="mdi mdi-delete-outline"></span>
-                                        </button>
-
-                                        <button form="form-update-{{ $category->idkategori }}" type="reset"
-                                            class="btn btn-primary"
-                                            onclick="changeIdStarred('{{ $category->idkategori }}', true)">
-                                            <span class="mdi mdi-backup-restore"></span>
                                         </button>
                                     </td>
                                     </tr>

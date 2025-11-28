@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\jenisHewan;
 use App\Models\Kategori;
+use App\Models\KategoriKlinis;
 use App\Models\Pemilik;
 use App\Models\Pet;
 use App\Models\rasHewan;
@@ -161,6 +162,48 @@ class masterController extends validationController
         try {
             $kategori = Kategori::findOrFail($id);
             $kategori->delete();
+            return redirect()->back()->with('success', 'Berhasil menghapus kategori');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function updateKategoriKlinis(Request $request, $id) {
+        $request->validate([
+            'nama' => 'string|required|min:3|max:255|unique:kategori_klinis,nama_kategori_klinis,'.$id.',idkategori_klinis'
+        ]);
+
+        try {
+            $kategori_klinis = KategoriKlinis::findOrFail($id);
+            $kategori_klinis->update([
+                'nama_kategori_klinis' => $request->get('nama')
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil mengupdate kategori klinis');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function createKategoriKlinis(Request $request) {
+        $request->validate([
+            'nama' => 'string|required|min:3|max:255|unique:kategori_klinis,nama_kategori_klinis'
+        ]);
+        try {
+            KategoriKlinis::create([
+                'nama_kategori_klinis' => $request->get('nama')
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil menambah kategori klinis');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteKategoriKlinis(Request $request, $id) {
+        try {
+            $kategori_klinis = KategoriKlinis::findOrFail($id);
+            $kategori_klinis->delete();
             return redirect()->back()->with('success', 'Berhasil menghapus kategori');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());

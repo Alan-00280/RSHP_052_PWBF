@@ -9,6 +9,7 @@ class KategoriKlinis extends Model
     protected $table = 'kategori_klinis';
     protected $primaryKey = 'idkategori_klinis';
     protected $guarded = ['idkategori_klinis'];
+    public $timestamps = false;
 
     public function KodeTindakanTerapi() {
         return $this->hasMany(KodeTindakanTerapi::class, 'idkategori_klinis');

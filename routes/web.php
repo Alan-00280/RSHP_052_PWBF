@@ -79,6 +79,10 @@ Route::middleware('isAdmin')->group(function () {
     Route::post('/create-lategori', [masterController::class, 'createKategori'])->name('create-kategori');
 
     Route::delete('/delete-kategori/{id}', [masterController::class, 'deleteKategori'])->name('delete-kategori');
+
+    Route::patch('/update-kategori-klinis/{id}', [masterController::class, 'updateKategoriKlinis'])->name('update-kategori-klinis');
+    Route::post('/create-kategori-klinis', [masterController::class, 'createKategoriKlinis'])->name('create-kategori-klinis');
+    Route::delete('/delete-kategori-klinis/{id}', [masterController::class, 'deleteKategoriKlinis'])->name('delete-kategori-klinis');
 });
 
 Route::middleware('isResepsionis')->group(function () {
