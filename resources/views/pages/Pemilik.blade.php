@@ -7,7 +7,12 @@
         <div class="flex w-full justify-end">
             <a class="btn btn-primary !bg-gray-400 !border-0 !text-gray-900 hover:!bg-gray-600 transition-all ease-in mb-3"
                 href="{{ route('dashboard') }}" role="button">Dashboard</a>
-            <a name="" id="" class="btn btn-success mb-3 text-light" href="{{ '#' }}" role="button" data-bs-toggle="modal"
+            <a name="" 
+                id="" 
+                class="btn btn-success mb-3 text-light" 
+                href="{{ '#' }}" 
+                role="button" 
+                data-bs-toggle="modal"
                 data-bs-target="#createModal">
                 <span class="mdi mdi-plus"></span>
                 Daftarkan Pemilik
@@ -68,45 +73,45 @@
                                         @csrf
                                         @method('PATCH')
                                         <tr class="hover:bg-gray-50 transition-colors">
-                                            <td class="px-4 py-2 text-gray-800" id="id-{{ $pemilik->idpemilik }}">
-                                                {{ $pemilik->idpemilik }}
-                                            </td>
-                                            <td class="px-4 py-2 text-gray-800">
-                                                <div class="d-flex align-items-center ms-2" style="cursor: default;">
-                                                    <input type="text" name="nama" class="form-control p-2" style="width: 200px"
-                                                        oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
-                                                        value="{{ $pemilik->user->nama }}" id="nama-{{ $pemilik->idpemilik }}">
-                                                    <span class="mdi mdi-pencil mx-2"></span>
-                                                </div>
-                                            </td>
-                                            <td class="px-4 py-2 text-gray-800">
-                                                <div class="d-flex align-items-center ms-2" style="cursor: default;">
-                                                    <input type="text" name="email" class="form-control p-2"
-                                                        style="width: 200px"
-                                                        oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
-                                                        value="{{ $pemilik->user->email }}"
-                                                        id="email-{{ $pemilik->idpemilik }}">
-                                                    <span class="mdi mdi-pencil mx-2"></span>
-                                                </div>
-                                            </td>
-                                            <td class="px-4 py-2 text-gray-800">
-                                                <div class="d-flex align-items-center ms-2" style="cursor: default;">
-                                                    <input type="text" name="no_wa" class="form-control p-2"
-                                                        style="width: 200px"
-                                                        oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
-                                                        value="{{ $pemilik->no_wa }}" id="wa-{{ $pemilik->idpemilik }}">
-                                                    <span class="mdi mdi-pencil mx-2"></span>
-                                                </div>
-                                            </td>
-                                            <td class="px-4 py-2 text-gray-800" style="min-width: 400px">
-                                                <div class="d-flex align-items-center ms-2" style="cursor: default;">
-                                                    <textarea name="alamat" class="form-control w-100"
-                                                        id="alamat-{{ $pemilik->idpemilik }}"
-                                                        oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
-                                                        rows="4">{{ $pemilik->alamat }}</textarea>
-                                                    <span class="mdi mdi-pencil mx-2"></span>
-                                                </div>
-                                            </td>
+                                        <td class="px-4 py-2 text-gray-800" id="id-{{ $pemilik->idpemilik }}">
+                                            {{ $pemilik->idpemilik }}
+                                        </td>
+                                        <td class="px-4 py-2 text-gray-800">
+                                            <div class="d-flex align-items-center ms-2" style="cursor: default;">
+                                                <input type="text" name="nama" class="form-control p-2" style="width: 200px"
+                                                    oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
+                                                    value="{{ $pemilik->user->nama }}" id="nama-{{ $pemilik->idpemilik }}">
+                                                <span class="mdi mdi-pencil mx-2"></span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-2 text-gray-800">
+                                            <div class="d-flex align-items-center ms-2" style="cursor: default;">
+                                                <input type="text" name="email" class="form-control p-2"
+                                                    style="width: 200px"
+                                                    oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
+                                                    value="{{ $pemilik->user->email }}"
+                                                    id="email-{{ $pemilik->idpemilik }}">
+                                                <span class="mdi mdi-pencil mx-2"></span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-2 text-gray-800">
+                                            <div class="d-flex align-items-center ms-2" style="cursor: default;">
+                                                <input type="text" name="no_wa" class="form-control p-2"
+                                                    style="width: 200px"
+                                                    oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
+                                                    value="{{ $pemilik->no_wa }}" id="wa-{{ $pemilik->idpemilik }}">
+                                                <span class="mdi mdi-pencil mx-2"></span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-2 text-gray-800" style="min-width: 400px">
+                                            <div class="d-flex align-items-center ms-2" style="cursor: default;">
+                                                <textarea name="alamat" class="form-control w-100"
+                                                    id="alamat-{{ $pemilik->idpemilik }}"
+                                                    oninput="changeIdStarred('{{ $pemilik->idpemilik }}')"
+                                                    rows="4">{{ $pemilik->alamat }}</textarea>
+                                                <span class="mdi mdi-pencil mx-2"></span>
+                                            </div>
+                                        </td>
                                     </form>
                                     <td class="px-4 py-2 flex justify-center gap-2">
                                         <button form="pemilik-data-{{ $pemilik->idpemilik }}" type="submit"
@@ -233,6 +238,7 @@
             }
         }
 
+        // Reset form saat nutup modal
         const modalForm = document.getElementById('modal-create-form')
         document.getElementById('createModal')
             .addEventListener('hidden.bs.modal', () => {

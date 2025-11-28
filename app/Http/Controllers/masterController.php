@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\jenisHewan;
+use App\Models\Kategori;
 use App\Models\Pemilik;
 use App\Models\Pet;
 use App\Models\rasHewan;
@@ -121,6 +122,48 @@ class masterController extends validationController
             return redirect()->route('pet')->with('success', 'Berhasil menambahkan Pet');
         } catch (\Exception $e) {
             throw new \Exception('Gagal menyimpan: '. $e->getMessage());
+        }
+    }
+
+    public function updateKategori(Request $request, $id) {
+        $request->validate([
+            'nama' => 'string|required|min:3|max:255|unique:kategori,nama_kategori,'.$id.',idkategori'
+        ]);
+
+        try {
+            $kategori = Kategori::findOrFail($id);
+            $kategori->update([
+                'nama_kategori' => $request->get('nama')
+            ]);
+
+            return redirect()->route('kategori-data')->with('success', 'Berhasil mengupdate kategori');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function createKategori(Request $request) {
+        $request->validate([
+            'nama' => 'string|required|min:3|max:255|unique:kategori,nama_kategori'
+        ]);
+        try {
+            Kategori::create([
+                'nama_kategori' => $request->get('nama')
+            ]);
+
+            return redirect()->route('kategori-data')->with('success', 'Berhasil menambah kategori');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteKategori(Request $request, $id) {
+        try {
+            $kategori = Kategori::findOrFail($id);
+            $kategori->delete();
+            return redirect()->back()->with('success', 'Berhasil menghapus kategori');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menyimpan: ' . $e->getMessage());
         }
     }
 

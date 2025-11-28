@@ -74,7 +74,11 @@ Route::middleware('isAdmin')->group(function () {
 
     Route::patch('/update-user/{id}', [masterController::class, 'updateUser'])->name('update-user');
 
-    
+    Route::patch('/update-kategori/{id}', [masterController::class, 'updateKategori'])->name('update-kategori');
+
+    Route::post('/create-lategori', [masterController::class, 'createKategori'])->name('create-kategori');
+
+    Route::delete('/delete-kategori/{id}', [masterController::class, 'deleteKategori'])->name('delete-kategori');
 });
 
 Route::middleware('isResepsionis')->group(function () {
