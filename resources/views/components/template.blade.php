@@ -9,6 +9,7 @@
 
     {{-- Tambahkan Tailwind --}}
     @vite('resources/css/app.css')
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/6/65/Logo-Branding-UNAIR-biru.png" type="image/png">
 </head>

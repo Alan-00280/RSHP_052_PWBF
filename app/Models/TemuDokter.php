@@ -14,7 +14,11 @@ class TemuDokter extends Model
         return $this->belongsTo(Pet::class, 'idpet');
     }
 
-    public function RoleUser() {
+    public function Resepsionis() {
         return $this->belongsTo(RoleUser::class, 'iddokter');
+    }
+
+    public function RekamMedis() {
+        return $this->hasOne(RekamMedis::class, 'idreservasi_dokter');
     }
 }

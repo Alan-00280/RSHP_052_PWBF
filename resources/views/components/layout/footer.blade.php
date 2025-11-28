@@ -1,4 +1,4 @@
-<footer class="bg-gray-900 text-gray-200 py-8">
+<footer class="footer">
     <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6">
         {{-- Kiri: Copyright --}}
         <div class="text-center md:text-left text-sm text-gray-400">
@@ -17,6 +17,6 @@
 
     {{-- Garis pemisah kecil di bawah --}}
     <div class="border-t border-gray-700 mt-6 pt-4 text-center text-xs text-gray-500">
-        Built with ❤️ using Laravel & Tailwind CSS
+        Built with ❤️ by Alan using Laravel Tailwind Bootstrap CSS
     </div>
 </footer>

@@ -9,6 +9,7 @@ class Pemilik extends Model
     protected $table = 'pemilik';
     protected $primaryKey = 'idpemilik';
     protected $guarded = ['idpemilik'];
+    public $timestamps = false;
 
     public function User() {
         return $this->belongsTo(UserRshp::class, 'iduser');

@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
+    /*     |--------------------------------------------------------------------------
     | Login Controller
     |--------------------------------------------------------------------------
     |
@@ -40,7 +39,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/idashboard';
 
     /**
      * Create a new controller instance.

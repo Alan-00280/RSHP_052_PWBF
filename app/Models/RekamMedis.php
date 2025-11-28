@@ -14,11 +14,11 @@ class RekamMedis extends Model
         return $this->belongsTo(TemuDokter::class, 'idreservasi_dokter');
     }
 
-    public function RoleUser() {
+    public function DokterPemeriksa() {
         return $this->belongsTo(RoleUser::class, 'dokter_pemeriksa');
     }
 
     public function DetailRekamMedis(){
-        return $this->hasOne(DetailRekamMedis::class, 'idrekam_medis');
+        return $this->hasMany(DetailRekamMedis::class, 'idrekam_medis');
     }
 }

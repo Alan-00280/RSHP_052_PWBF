@@ -12,10 +12,10 @@ class DetailRekamMedis extends Model
     protected $guarded = ['iddetail_rekam_medis'];
 
     public function RekamMedis() {
-        return $this->BelongsTo(RekamMedis::class, 'idrekam_medis');
+        return $this->belongsTo(RekamMedis::class, 'idrekam_medis');
     }
 
     public function KodeTindakanTerapi() {
-        return $this->belongsTo(KodeTindakanTerapi::class, 'idkode_tindakan_terapi');
+        return $this->belongsTo(KodeTindakanTerapi::class,'idkode_tindakan_terapi');
     }
 }

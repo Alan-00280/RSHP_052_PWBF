@@ -22,7 +22,7 @@ class isDokter
             return redirect(route('login'));
         }
 
-        if ( Session::get('role_id') !== 2) {
+        if ( !in_array(Session::get('role_id'), [1, 2]) ) {
             return back()->with('error', 'Akses ditolak!');
         }
 

@@ -3,14 +3,18 @@
     'description' => 'undefined'
 ])
 
-<div {{ $attributes->merge(['class'=>'']) }}>
+<div {{ $attributes->merge(['class'=>'col-sm-6 col-md-4 col-lg-3']) }}>
     <a {{ $attributes }}
-    class="block w-full rounded-2xl bg-white p-6 shadow-md hover:shadow-lg transition duration-300 border border-gray-200">
-        <h3 class="text-xl font-semibold text-gray-800 mb-2">
-            {{ $title }}
-        </h3>
-        <p class="text-gray-500 text-sm">
-            {{ $description }}
-        </p>
+    class="text-decoration-none">
+        <div class="card custom-card h-100 shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title h5 mb-2 text-dark">
+                    {{ $title }}
+                </h3>
+                <p class="card-text text-muted small">
+                    {{ $description }}
+                </p>
+            </div>
+        </div>
     </a>
 </div>

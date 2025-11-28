@@ -22,7 +22,7 @@ class isResepsionis
             return redirect(route('login'));
         }
 
-        if ( Session::get('role_id') !== 4) {
+        if ( Session::get('role_id') !== 4 && Session::get('role_id') !== 1) {
             return back()->with('error', 'Akses ditolak!');
         }
 

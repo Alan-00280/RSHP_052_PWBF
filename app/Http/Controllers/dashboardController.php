@@ -6,10 +6,13 @@ use App\Models\jenisHewan;
 use App\Models\Kategori;
 use App\Models\KategoriKlinis;
 use App\Models\KodeTindakanTerapi;
+use App\Models\Pemilik;
 use App\Models\Pet;
 use App\Models\rasHewan;
+use App\Models\RekamMedis;
 use App\Models\Role;
 use App\Models\RoleUser;
+use App\Models\TemuDokter;
 use App\Models\UserRshp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +55,7 @@ class dashboardController extends Controller
         return view(
             'pages.rasHewan',
             [
-                'rasHewans' => rasHewan::with(['JenisHewan'])->get()
+                'jenisHewans' => jenisHewan::with(['RasHewan'])->get()
             ]
         );
     }
@@ -88,7 +91,9 @@ class dashboardController extends Controller
         return view(
             'pages.pet',
             [
-                'pets' => Pet::with(['Pemilik.User'])->get()
+                'pets' => Pet::with(['Pemilik.User', 'RasHewan.JenisHewan'])->get(),
+                'pemiliks' => Pemilik::with('User')->get(),
+                'jeniss' => jenisHewan::all(),
             ]
         );
     }
@@ -97,8 +102,27 @@ class dashboardController extends Controller
         return view(
             'pages.role',
             [
-                'roles' => Role::all()
+                'roles' => Role::all(),
+                'user_role' => UserRshp::with('RoleUser.Role')->get()
             ]
+        );
+    }
+
+    public function Pemilik() {
+        return view (
+            'pages.pemilik',
+            [
+                'pemiliks' => Pemilik::with(['User'])->get()
+            ]
+        );
+    }
+
+    public function TemuDokter() {
+        $temu_dokter_detail = TemuDokter::with(['Pet.RasHewan.JenisHewan', 'Pet.Pemilik.User', 'Resepsionis.User'])->get();
+        
+        return view (
+            'pages.temuDokter',
+            ['temu_dokter_details' => $temu_dokter_detail]
         );
     }
 }

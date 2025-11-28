@@ -10,6 +10,8 @@ class Pet extends Model
     protected $primaryKey = 'idpet';
     protected $guarded = ['idpet'];
 
+    public $timestamps = false;
+
     public function RasHewan() {
         return $this->belongsTo(rasHewan::class, 'idras_hewan');
     }
