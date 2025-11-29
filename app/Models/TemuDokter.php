@@ -9,6 +9,7 @@ class TemuDokter extends Model
     protected $table = 'temu_dokter';
     protected $primaryKey = 'idreservasi_dokter';
     protected $guarded = ['idreservasi_dokter'];
+    public $timestamps = false;
 
     public function Pet() {
         return $this->belongsTo(Pet::class, 'idpet');

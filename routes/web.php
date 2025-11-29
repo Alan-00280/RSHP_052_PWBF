@@ -36,7 +36,6 @@ Route::middleware('isAdmin')->group(function () {
 }); 
 
 Route::middleware('isResepsionis')->prefix('/dashboard/resepsionis')->group(function () {
-    Route::get('/pet', [dashboardController::class, 'Pet'])->name('pet-resepsionis');
     Route::get('/pemilik', [dashboardController::class, 'Pemilik'])->name('pemilik-resep');
     Route::get('/temu-dokter', [dashboardController::class, 'TemuDokter'])->name('temu-dokter');
     Route::get('/pet', [dashboardController::class, 'Pet'])->name('pet');
@@ -100,6 +99,11 @@ Route::middleware('isResepsionis')->group(function () {
     Route::get('/get-ras/{id}', [masterController::class, 'getRasbyJenis'])->name('get-ras-by-jenis');
 
     Route::post('/create-pet', [masterController::class, 'createPet'])->name('create-pet');
+
+    Route::get('/get-pet/{id}', [masterController::class, 'getPetbyPemilik'])->name('get-pet-by-pemilik');
+
+    Route::post('/create-temu-dok', [masterController::class, 'createTemuDokter'])->name('create-temu-dokter');
+    Route::delete('/delete-temu-dok/{id}', [masterController::class, 'deleteTemuDokter'])->name('delete-temu-dokter');
 });
 
 

@@ -120,11 +120,22 @@ class dashboardController extends Controller
     }
 
     public function TemuDokter() {
-        $temu_dokter_detail = TemuDokter::with(['Pet.RasHewan.JenisHewan', 'Pet.Pemilik.User', 'Resepsionis.User'])->get();
+        $temu_dokter_detail = TemuDokter::with(['Pet.RasHewan.JenisHewan', 'Pet.Pemilik.User', 'Resepsionis.User'])->orderBy('status', 'desc')->get();
         
         return view (
             'pages.temuDokter',
-            ['temu_dokter_details' => $temu_dokter_detail]
+            [
+                'temu_dokter_details' => $temu_dokter_detail,
+                'login_user_role' => Auth::user()->load([
+                                        'RoleUser' => function ($q) {
+                                            $q->where('status', 1);
+                                        }
+                                    ]),
+                'resepsionises' => UserRshp::whereHas('RoleUser.Role', function ($q) {
+                    $q->where('idrole', '4');
+                })->with('RoleUser.Role')->get(),
+                'pemiliks' => Pemilik::with('User')->get()
+            ]
         );
     }
 }

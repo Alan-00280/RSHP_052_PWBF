@@ -6,15 +6,26 @@
 
     {{-- @dd($pets) --}}
 
+    <x-successAlert :message="session('success')" />
+
+    @if(session('error')){
+        <x-error-alert :errors="session('error')" type="global" />
+    }
+    @endif
+
+    <x-error-alert :errors="$errors" />
+
     <div class="overflow-x-auto">
         <div class="flex w-full justify-end">
             <a class="btn btn-primary !bg-gray-400 !border-0 !text-gray-900 hover:!bg-gray-600 transition-all ease-in mb-3"
                 href="{{ route('dashboard') }}" role="button">Dashboard</a>
-            <a name="" id="" class="btn btn-success mb-3 text-light" href="{{ '#' }}" role="button">
+            <a name="" id="" class="btn btn-success mb-3 text-light" href="{{ '#' }}" role="button" data-bs-toggle="modal"
+                data-bs-target="#createModal">
                 <span class="mdi mdi-plus"></span>
                 Buat Temu Dokter
             </a>
         </div>
+
         {{-- <x-logger :object="$temu_dokter_details" /> --}}
         {{-- {
         "idreservasi_dokter": 218,
@@ -136,14 +147,16 @@
                                         {{-- Action Buttons --}}
                                         <td class="px-4 py-2 text-gray-800">
                                             <div class="d-flex gap-2">
-                                                <a href="{{ '#' }}"
-                                                    class="btn btn-sm btn-warning"><span class="mdi mdi-pencil"></span> Edit</a>
-
-                                                <form action="{{ '#' }}"
-                                                    method="POST" onsubmit="return confirm('Hapus data ini?')">
-                                                    @csrf @method('DELETE')
-                                                    <button class="btn btn-sm btn-danger"><span class="mdi mdi-delete-outline"></span> Delete</button>
-                                                </form>
+                                                @if ($item->status == 'W')
+                                                <button 
+                                                    data-id="{{ $item->idreservasi_dokter }}"
+                                                    class="btn btn-danger text-white btn-delete p-2"
+                                                    role="button" 
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#confirm-delete-model"
+                                                ><span class="mdi mdi-delete-outline"></span> Delete
+                                                </button>
+                                                @endif
                                             </div>
                                         </td>
 
@@ -158,4 +171,142 @@
         </div>
 
     </div>
+@endsection
+
+@section('modal')
+    {{-- Modal Createing --}}
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('create-temu-dokter') }}" method="POST" id="modal-create-form"> 
+                    @csrf 
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambahkan Temu Dokter</h1> <button type="button"
+                            class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3"> <label for="input-jenis" class="form-label">Resepsionis</label>
+                            {{-- Ini Buat Resepsionis, diambil data nya --}}
+                            {{-- <x-logger :object="$login_user_role" /> --}}
+
+                            {{-- <x-logger :object="$resepsionises" /> --}}
+                            {{-- $login_user_role->RoleUser[0]->idrole == '1' ? 'true' : 'false' --}}
+                            <select class="form-select text-black" id="input-resepsionis" name="idResepsionis" aria-label="Default select example" required>
+                                <option class="text-black" value="" selected="{{ $login_user_role->RoleUser[0]->idrole == '1' ? 'true' : 'false' }}">-- Pilih Resepsionis --</option>
+                                @if($resepsionises)
+                                    @foreach ($resepsionises as $resepsionis)
+                                        <option class="text-black" value="{{ $resepsionis->RoleUser[0]->idrole_user }}">{{ $resepsionis->nama }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="mb-3"> <label for="input-pemilik" class="form-label">Pemilik</label> 
+                            <select class="form-select text-black" id="input-pemilik" name="idPemilik" aria-label="Default select example" required>
+                                <option class="text-black" value="" selected>-- Pilih Pemilik --</option>
+                                @if($pemiliks)
+                                    @foreach ($pemiliks as $pemilik)
+                                        <option class="text-black" value="{{ $pemilik->idpemilik }}">{{ $pemilik->User->nama }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="mb-3"> <label for="input-pet" class="form-label">Pet</label> 
+                            <select class="form-select text-black" id="input-pet" name="idPet" aria-label="Default select example" required>
+                                <option class="text-black" value="" selected>-- Pilih Pemilik Dahulu --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal" id="close-modal">Close</button> 
+                        <button type="submit"
+                            class="btn btn-primary">Simpan</button> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Confirm Delete  --}}
+    <div class="modal fade" id="confirm-delete-model" tabindex="-1" aria-labelledby="confirm-delete-model" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirm-delete-model">Hapus kategori</h1> <button type="button"
+                        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        Yakin menghapus temu dokter #<strong id="idTemuDokter"></strong>? 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal" id="close-modal">Batal</button>
+                    <form action="" method="post" id="form-delete">
+                        @csrf
+                        @method('DELETE')    
+                        <button type="submit"
+                        class="btn btn-danger text-white">Hapus</button> 
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('page-script')
+    <script>
+        document.addEventListener('DOMContentLoaded', (e) => {
+            const deleteButton = document.querySelectorAll('.btn-delete')
+            const formDelete = document.getElementById('form-delete')
+            const idTemuDokter= document.getElementById('idTemuDokter')
+            
+            deleteButton.forEach(btn => {
+                btn.addEventListener('click', (e)=> {
+                const id = e.currentTarget.dataset.id
+
+                formDelete.action = `/delete-temu-dok/${id}`;
+                idTemuDokter.innerText = id;
+                })
+            });
+            
+        })
+
+        // Reset form saat nutup modal
+        const modalForm = document.getElementById('modal-create-form')
+        document.getElementById('createModal')
+            .addEventListener('hidden.bs.modal', () => {
+                modalForm.reset()
+        })
+
+        const selectPemilik = document.getElementById('input-pemilik')
+        const selectPet = document.getElementById('input-pet')
+        const loadSelectPet = async (e) => {
+            selectPet.innerHTML = `<option class="text-black" value="" selected>Loading . . .</option>`
+            if (e.target.value) {
+                const idpemilik = e.target.value
+                const FetchPets = await fetch(`/get-pet/${idpemilik}`)
+                const pets = await FetchPets.json()
+
+                // console.log(pets)
+
+                if (pets.length > 0) {
+                selectPet.innerHTML = `<option class="text-black" value="${pets[0].idpet}" selected>${pets[0].nama} - ${pets[0].ras_hewan.nama_ras}</option>`
+                pets.forEach((pet, idx) => {
+                    if (idx >= 1) {
+                    selectPet.innerHTML += `<option class="text-black" value="${pet.idpet}">${pet.nama} - ${pet.ras_hewan.nama_ras}</option>`
+                    }
+                });
+                } else {
+                selectPet.innerHTML = `<option class="text-black" value="" selected>-- No Data --</option>`
+                }
+            } else {
+                selectPet.innerHTML = `<option class="text-black" value="" selected>-- Pilih Pemilik Dahulu --</option>`
+            }
+        }
+        selectPemilik.addEventListener('change', (e) => loadSelectPet(e))
+        
+
+
+    </script>
 @endsection

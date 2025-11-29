@@ -5,7 +5,7 @@
         <x-dashboard.functionCard href="{{ route('kategori-data-resepsionis') }}" title="Kategori" description="View and Edit Kategori" />
         <x-dashboard.functionCard href="{{ route('kategori-klinis-data-resepsionis') }}" title="Kategori Klinis" description="View and Edit Kategori Klinis" />
         <x-dashboard.functionCard href="{{ route('kategori-tindakan-terapi-resepsionis') }}" title="Kode Tindakan Terapi" description="View and Edit Kode Tindakan Terapi" />
-        <x-dashboard.functionCard href="{{ route('pet-resepsionis') }}" title="Pet" description="Edit Pet data in here" />
+        <x-dashboard.functionCard href="{{ route('pet') }}" title="Pet" description="Edit Pet data in here" />
     </div>
     
 </section>

@@ -9,6 +9,7 @@ use App\Models\KodeTindakanTerapi;
 use App\Models\Pemilik;
 use App\Models\Pet;
 use App\Models\rasHewan;
+use App\Models\TemuDokter;
 use App\Models\UserRshp;
 use App\View\Components\functionCard;
 use Carbon\Carbon;
@@ -247,6 +248,39 @@ class masterController extends validationController
             return redirect()->route('kategori-tindakan-terapi')->with('success', 'Berhasil menghapus kode tindakan');
         } catch (\Exception $e) {
             return redirect()->route('kategori-tindakan-terapi')->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function getPetbyPemilik(Request $request, $id) {
+        return response()->json(Pet::where('idpemilik', $id)->with(['RasHewan'])->get());
+    }
+
+    public function createTemuDokter(Request $request) {
+        $request->validate([
+            'idResepsionis' => 'required|string',
+            'idPemilik' => 'required|string',
+            'idPet' => 'required|string'
+        ]);
+
+        try {
+            TemuDokter::create([
+                'idpet' => $request->get('idPet'),
+                'iddokter' => $request->get('idResepsionis')
+            ]);
+
+            return redirect()->route('temu-dokter')->with('success', 'Berhasil membuat temu dokter');
+        } catch (\Exception $e) {
+            return redirect()->route('temu-dokter')->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteTemuDokter(Request $request, $id) {
+        try {
+            $temu_dokter = TemuDokter::where('idreservasi_dokter', $id)->where('status', 'W')->firstOrFail();
+            $temu_dokter->delete();
+            return redirect()->route('temu-dokter')->with('success', 'Berhasil menghapus temu dokter');
+        } catch (\Exception $e) {
+            return redirect()->route('temu-dokter')->with('error', 'Gagal menghapus: ' . $e->getMessage());
         }
     }
 
