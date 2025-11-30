@@ -9,6 +9,7 @@ class RekamMedis extends Model
     protected $table = 'rekam_medis';
     protected $primaryKey = 'idrekam_medis';
     protected $guarded = ['idrekam_medis'];
+    public $timestamps = false;
 
     public function TemuDokter() {
         return $this->belongsTo(TemuDokter::class, 'idreservasi_dokter');

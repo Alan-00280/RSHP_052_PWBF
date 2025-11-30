@@ -22,7 +22,7 @@ class isPerawat
             return redirect(route('login'));
         }
 
-        if ( Session::get('role_id') !== 3) {
+        if(!\in_array(Session::get('role_id'), [1, 3])) {
             return back()->with('error', 'Akses ditolak!');
         }
 

@@ -9,10 +9,12 @@ use App\Models\KodeTindakanTerapi;
 use App\Models\Pemilik;
 use App\Models\Pet;
 use App\Models\rasHewan;
+use App\Models\RekamMedis;
 use App\Models\TemuDokter;
 use App\Models\UserRshp;
 use App\View\Components\functionCard;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -281,6 +283,42 @@ class masterController extends validationController
             return redirect()->route('temu-dokter')->with('success', 'Berhasil menghapus temu dokter');
         } catch (\Exception $e) {
             return redirect()->route('temu-dokter')->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
+    }
+
+    public function getTemuDokterbyID(Request $request, $id) {
+        try {
+            return response()->json(
+                DB::select('SELECT * FROM temu_dokter_detail WHERE status = "W" AND idreservasi_dokter LIKE CONCAT("%", ?, "%")', [$id])
+            );
+        } catch (\Exception $e) {
+            return response()->json($e);
+        }
+    }
+
+    public function createRekamMedis(Request $request) {
+        $validated = $this->validateRekamMedis($request);
+        $request->validate([
+            'idreservasi_dokter' => 'required|string',
+            'iddokter' => 'required|string'
+        ]);
+
+        try {
+            $temu_dokter = TemuDokter::findOrFail($request->get('idreservasi_dokter'));
+            $temu_dokter->update([
+                'status' => 'R'
+            ]);
+            RekamMedis::create([
+                'anamnesa' => $validated['anamnesa'],
+                'temuan_klinis' => $validated['temu_klinis'],
+                'diagnosa' => $validated['diagnosa'],
+                'idreservasi_dokter' => $request->get('idreservasi_dokter'),
+                'dokter_pemeriksa' => $request->get('iddokter')
+            ]);
+
+            return redirect()->route('rekam-medis')->with('success', 'Berhasil membuat rekam medis');
+        } catch (\Exception $e) {
+            return redirect()->route('create-rekam', ['id' => $request->get('idreservasi_dokter')])->with('error', 'Gagal menghapus: ' . $e->getMessage());
         }
     }
 

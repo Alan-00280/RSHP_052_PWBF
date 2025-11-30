@@ -33,6 +33,9 @@
 
   <!-- For Hot Reload -->
   @vite(['resources/css/app2.css'])
+
+  {{-- Custom CSS --}}
+  @yield('style')
   
 </head>
 

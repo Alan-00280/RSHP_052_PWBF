@@ -63,4 +63,12 @@ class validationController extends Controller
             'idkategori_klinis' => 'string|required',
         ]);
     }
+
+    protected function validateRekamMedis(Request $request) {
+        return $request->validate([
+            'anamnesa' => 'required|min:3|max:365|string',
+            'temu_klinis' => 'required|min:3|max:365|string',
+            'diagnosa' => 'required|min:3|max:365|string'
+        ]);
+    }
 }

@@ -210,7 +210,8 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="mb-3"> <label for="input-pet" class="form-label">Pet</label> 
+                        <div class="mb-3"> 
+                            <label for="input-pet" class="form-label">Pet</label> 
                             <select class="form-select text-black" id="input-pet" name="idPet" aria-label="Default select example" required>
                                 <option class="text-black" value="" selected>-- Pilih Pemilik Dahulu --</option>
                             </select>

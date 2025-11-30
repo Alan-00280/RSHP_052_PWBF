@@ -132,7 +132,7 @@ class dashboardController extends Controller
                                         }
                                     ]),
                 'resepsionises' => UserRshp::whereHas('RoleUser.Role', function ($q) {
-                    $q->where('idrole', '4');
+                    $q->where('idrole', '4')->where('status', '1');
                 })->with('RoleUser.Role')->get(),
                 'pemiliks' => Pemilik::with('User')->get()
             ]

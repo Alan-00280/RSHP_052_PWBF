@@ -134,7 +134,8 @@
                             class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3"> <label for="inputNama" class="form-label">Nama*</label> 
+                        <div class="mb-3"> 
+                            <label for="inputNama" class="form-label">Nama*</label> 
                             <input type="text" class="form-control" id="inputNama" aria-describedby="namaHelp" name="nama" required>
                             <div id="namaHelp" class="form-text">Input nama kategori di sini</div>
                             @error('nama')

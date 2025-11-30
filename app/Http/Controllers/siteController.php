@@ -8,6 +8,8 @@ use App\Models\KategoriKlinis;
 use App\Models\KodeTindakanTerapi;
 use App\Models\Pet;
 use App\Models\RekamMedis;
+use App\Models\TemuDokter;
+use App\Models\UserRshp;
 use Auth;
 use Illuminate\Http\Request;
 use Session;
@@ -88,6 +90,17 @@ class siteController extends Controller
             'tindakan_detail' => KodeTindakanTerapi::where('idkode_tindakan_terapi', $id)->with(['Kategori', 'KategoriKlinis'])->first(),
             'kategori_klinises' => KategoriKlinis::all(),
             'kategories' => Kategori::all()
+        ]);
+    }
+
+    public function createRekamMedis(Request $request, $id) {
+        $temu_dokter = TemuDokter::where('idreservasi_dokter', $id)->with(['Pet.RasHewan.JenisHewan', 'Pet.Pemilik.User'])->first();
+
+        return view('perawat.create-rekam-medis', [
+            'temu_dokter' => $temu_dokter,
+            'dokters' => UserRshp::whereHas('RoleUser.Role', function ($q) {
+                    $q->where('idrole', '2')->where('status', '1');
+                })->with('RoleUser.Role')->get()
         ]);
     }
 }

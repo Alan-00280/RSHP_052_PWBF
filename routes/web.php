@@ -67,6 +67,11 @@ Route::middleware('isResepsionis')->prefix('/resepsionis')->group(function () {
     Route::get('/edit-pet/{id}', [siteController::class, 'editPet'])->name('edit-pet');
 });
 
+Route::middleware('isPerawat')->prefix('/perawat')->group
+(function () {
+    Route::get('/create-rekam/{id}', [siteController::class, 'createRekamMedis'])->name('create-rekam');
+});
+
 //? API ROUTES ?//
 Route::middleware('isAdmin')->group(function () {
     // Route::post('/create-user', [masterController::class, 'createUser'])->name('create-user-page');
@@ -90,20 +95,24 @@ Route::middleware('isAdmin')->group(function () {
 });
 
 Route::middleware('isResepsionis')->group(function () {
-    Route::patch('/update-pet/{id}', [masterController::class, 'patchPet'])->name('update-pet');
+    
 
     Route::patch('/update-pemilik/{id}', [masterController::class, 'patchPemilik'])->name('update-pemilik');
-
     Route::post('/create-pemilik', [masterController::class, 'postPemilik'])->name('create-pemilik');
 
     Route::get('/get-ras/{id}', [masterController::class, 'getRasbyJenis'])->name('get-ras-by-jenis');
 
+    Route::patch('/update-pet/{id}', [masterController::class, 'patchPet'])->name('update-pet');
     Route::post('/create-pet', [masterController::class, 'createPet'])->name('create-pet');
-
     Route::get('/get-pet/{id}', [masterController::class, 'getPetbyPemilik'])->name('get-pet-by-pemilik');
 
     Route::post('/create-temu-dok', [masterController::class, 'createTemuDokter'])->name('create-temu-dokter');
     Route::delete('/delete-temu-dok/{id}', [masterController::class, 'deleteTemuDokter'])->name('delete-temu-dokter');
+});
+
+Route::middleware('isPerawat')->group(function () { 
+    Route::get('/get-temu/{id}', [masterController::class, 'getTemuDokterbyID'])->name('get-temu-by-id');
+    Route::post('/create-rekam-medis', [masterController::class, 'createRekamMedis'])->name('create-rekam-medis');
 });
 
 
