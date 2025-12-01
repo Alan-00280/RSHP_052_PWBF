@@ -71,4 +71,11 @@ class validationController extends Controller
             'diagnosa' => 'required|min:3|max:365|string'
         ]);
     }
+
+    protected function validateDetilRekam(Request $request) {
+        return $request->validate([
+            'idkode_tindakan_terapi' => 'required|string',
+            'detail' => 'required|min:3|max:255|string'
+        ]);
+    }
 }

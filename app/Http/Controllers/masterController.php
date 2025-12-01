@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailRekamMedis;
 use App\Models\jenisHewan;
 use App\Models\Kategori;
 use App\Models\KategoriKlinis;
@@ -319,6 +320,23 @@ class masterController extends validationController
             return redirect()->route('rekam-medis')->with('success', 'Berhasil membuat rekam medis');
         } catch (\Exception $e) {
             return redirect()->route('create-rekam', ['id' => $request->get('idreservasi_dokter')])->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
+    }
+
+    
+
+    public function updateDetilRekam(Request $request, $id) {
+        $validated = $this->validateDetilRekam($request);
+        try {
+            $detil_rekam = DetailRekamMedis::findOrFail($id);
+            $detil_rekam->update([
+                'idkode_tindakan_terapi' => $validated['idkode_tindakan_terapi'],
+                'detail' => $validated['detail']
+            ]);
+
+            return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('success', 'Berhasil mengupdate detil rekam medis');
+        } catch (\Exception $e) {
+            return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('error', 'Gagal menghapus: ' . $e->getMessage());
         }
     }
 

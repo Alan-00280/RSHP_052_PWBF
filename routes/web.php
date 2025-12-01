@@ -115,6 +115,9 @@ Route::middleware('isPerawat')->group(function () {
     Route::post('/create-rekam-medis', [masterController::class, 'createRekamMedis'])->name('create-rekam-medis');
 });
 
+Route::middleware('isDokter')->group(function () {
+    Route::patch('/update-detil-rekam/{id}', [masterController::class, 'updateDetilRekam'])->name('update-detil-rekam');
+});
 
 //? LOGOUT ROUTE ?//
 Route::get('/logout', function () {

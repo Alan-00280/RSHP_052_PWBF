@@ -11,8 +11,10 @@ use App\Models\RekamMedis;
 use App\Models\TemuDokter;
 use App\Models\UserRshp;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Session;
+use function Laravel\Prompts\select;
 
 class siteController extends Controller
 {
@@ -80,7 +82,8 @@ class siteController extends Controller
 
         return view('dokter.detilRekamMedis', [
             'rekam' => $rekam,
-            'detil_rekam_medis' => $detil_rekam_medis
+            'detil_rekam_medis' => $detil_rekam_medis,
+            'tindakans' => DB::table('kode_tindakan_terapi')->join('kategori', 'kode_tindakan_terapi.idkategori', '=','kategori.idkategori')->join('kategori_klinis', 'kode_tindakan_terapi.idkategori_klinis', '=', 'kategori_klinis.idkategori_klinis')->select('kode_tindakan_terapi.idkode_tindakan_terapi', 'kode_tindakan_terapi.kode', 'kode_tindakan_terapi.deskripsi_tindakan_terapi', 'kategori_klinis.nama_kategori_klinis', 'kategori.nama_kategori')->get()
         ]);
 
     }
