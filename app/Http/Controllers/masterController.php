@@ -319,7 +319,7 @@ class masterController extends validationController
 
             return redirect()->route('rekam-medis')->with('success', 'Berhasil membuat rekam medis');
         } catch (\Exception $e) {
-            return redirect()->route('create-rekam', ['id' => $request->get('idreservasi_dokter')])->with('error', 'Gagal menghapus: ' . $e->getMessage());
+            return redirect()->route('create-rekam', ['id' => $request->get('idreservasi_dokter')])->with('error', 'Gagal membuat: ' . $e->getMessage());
         }
     }
 
@@ -333,6 +333,16 @@ class masterController extends validationController
                 'diagnosa' => $validated['diagnosa']
             ]);
             return redirect()->route('detil-rkm-medis', ['id' => $id])->with('success', 'Berhasil mengupdate rekam medis');
+        } catch (\Exception $e) {
+            return redirect()->route('detil-rkm-medis', ['id' => $id])->with('error', 'Gagal mengupdate: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteRekamMedis(Request $request, $id) {
+        try {
+            $rekam_medis = RekamMedis::findOrFail($id);
+            $rekam_medis->delete();
+            return redirect()->route('rekam-medis')->with('success', 'Berhasil menghapus');
         } catch (\Exception $e) {
             return redirect()->route('detil-rkm-medis', ['id' => $id])->with('error', 'Gagal menghapus: ' . $e->getMessage());
         }
@@ -349,8 +359,31 @@ class masterController extends validationController
 
             return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('success', 'Berhasil mengupdate detil rekam medis');
         } catch (\Exception $e) {
-            return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('error', 'Gagal menghapus: ' . $e->getMessage());
+            return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('error', 'Gagal mengupdate: ' . $e->getMessage());
         }
     }
 
+    public function createDetilRekam(Request $request, $id_rekam) {
+        $validated = $this->validateDetilRekam($request);
+        try {
+            DetailRekamMedis::create([
+                'idrekam_medis' => $id_rekam,
+                'idkode_tindakan_terapi' => $validated['idkode_tindakan_terapi'],
+                'detail' => $validated['detail']
+            ]);
+            return redirect()->route('detil-rkm-medis', ['id' => $id_rekam])->with('success', 'Berhasil menambah detil rekam');
+        } catch (\Exception $e) {
+            return redirect()->route('detil-rkm-medis', ['id' => $id_rekam])->with('error', 'Gagal menyimpan: ' . $e->getMessage());
+        }
+    }
+
+    public function deleteDetilRekam(Request $request, $id) {
+        try {
+            $detil_rekam = DetailRekamMedis::findOrFail($id);
+            $detil_rekam->delete();
+            return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('success', 'Berhasil menghapus detail rekam');
+        } catch (\Exception $e) {
+            return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
+    }
 }

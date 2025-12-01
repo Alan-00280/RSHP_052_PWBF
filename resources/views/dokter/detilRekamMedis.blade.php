@@ -55,8 +55,19 @@
 
     {{-- Rekam mwedis --}}
     <div class="card shadow-sm mb-4">
-        <div class="card-header bg-success text-white">
-            <strong id="edit-rekam-form">[Edit] Rekam Medis</strong>
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <strong id="edit-rekam-form" style="display: inline-block">[Edit] Rekam Medis #{{ $rekam->idrekam_medis }}</strong>
+            [
+            <div>
+                <button 
+                    class="btn btn-danger text-white btn-delete p-2"
+                    role="button" 
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirm-delete-rekam"
+                    ><span class="mdi mdi-delete-outline"></span> Delete
+                </button>
+            </div>
+            ]
         </div>
         <div class="card-body">
             <p><strong>Tanggal Pemeriksaan:</strong> {{ $rekam->created_at }}</p>
@@ -92,16 +103,16 @@
             <strong>Detail Tindakan Terapi</strong>
 
             {{-- Tambah Tindakan --}}
-            (<button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
+            (<button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambahDetilRekam">
                 + Tambah Tindakan
             </button>)
         </div>
 
         {{-- Createdetil-Modal --}}
-        <div class="modal fade" id="modalTambah">
+        <div class="modal fade" id="modalTambahDetilRekam">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="" method="POST">
+                    <form action="{{ route('create-detil-rekam-medis', ['id_rekam' => $rekam->idrekam_medis]) }}" method="POST" id="form-create-detil-rekam">
                         @csrf
 
                         <div class="modal-header">
@@ -112,14 +123,19 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label class="form-label">Kode Tindakan</label>
-                                <select name="idkode_tindakan_terapi" class="form-select">
-                                    {{-- Akan diisi dari controller --}}
+                                <select name="idkode_tindakan_terapi" class="form-select text-black"  required>
+                                    <option class="text-black" value="" selected>-- Pilih Tindakan --</option>
+                                    @if ($tindakans)
+                                    @foreach ($tindakans as $tindakan)
+                                        <option class="text-black" value="{{$tindakan->idkode_tindakan_terapi}}">{{ $tindakan->kode }} - {{ $tindakan->deskripsi_tindakan_terapi }} - {{ $tindakan->nama_kategori_klinis }} {{ $tindakan->nama_kategori }}</option>
+                                    @endforeach
+                                    @endif
                                 </select>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Detail</label>
-                                <textarea name="detail" class="form-control" rows="3"></textarea>
+                                <textarea name="detail" class="form-control" rows="4" required></textarea>
                             </div>
                         </div>
 
@@ -219,8 +235,9 @@
                     <div class="modal fade" id="modalDelete{{ $d->iddetail_rekam_medis }}">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="" method="POST">
+                                <form action="{{ route('delete-detil-rekam', ['id' => $d->iddetail_rekam_medis]) }}" method="POST">
                                     @csrf
+                                    @method('DELETE')
 
                                     <div class="modal-header">
                                         <h5 class="modal-title text-danger">Hapus Tindakan</h5>
@@ -232,6 +249,7 @@
                                     </div>
 
                                     <div class="modal-footer">
+                                        <input type="hidden" name="idrekam_medis" value="{{ $rekam->idrekam_medis }}">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         <button type="submit" class="btn btn-danger">Hapus</button>
                                     </div>
@@ -248,8 +266,43 @@
     </div>
 
 @endsection
+@section('modal')
+    {{-- Modal Confirm Delete Rekam  --}}
+    <div class="modal fade" id="confirm-delete-rekam" tabindex="-1" aria-labelledby="confirm-delete-rekam" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirm-delete-rekam">Hapus kategori</h1> <button type="button"
+                        class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        Yakin menghapus Rekam Medis #<strong id="idRekamMedis">{{ $rekam->idrekam_medis }}</strong>? 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal" id="close-modal">Batal</button>
+                    <form action="{{ route('delete-rekam-medis', ['id'=>$rekam->idrekam_medis]) }}" method="post" id="form-delete">
+                        @csrf
+                        @method('DELETE')    
+                        <button type="submit"
+                        class="btn btn-danger text-white">Hapus</button> 
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
 @section('page-script')
 <script>
+    // Reset form saat nutup modal create detil rekam
+    const modalForm = document.getElementById('form-create-detil-rekam')
+    document.getElementById('modalTambahDetilRekam')
+        .addEventListener('hidden.bs.modal', () => {
+            modalForm.reset()
+        })
+
     // ubah judul form edit detil
     const changeFormTitleStarred = (modal, reset = false) => {
         const formTitle = modal.querySelector('#form-title');

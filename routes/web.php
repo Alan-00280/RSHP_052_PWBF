@@ -112,12 +112,16 @@ Route::middleware('isResepsionis')->group(function () {
 
 Route::middleware('isPerawat')->group(function () { 
     Route::get('/get-temu/{id}', [masterController::class, 'getTemuDokterbyID'])->name('get-temu-by-id');
+
     Route::post('/create-rekam-medis', [masterController::class, 'createRekamMedis'])->name('create-rekam-medis');
     Route::patch('/update-rekam-medis/{id}', [masterController::class, 'updateRekamMedis'])->name('update-rekam-medis');
+    Route::delete('/delete-rekam/{id}', [masterController::class, 'deleteRekamMedis'])->name('delete-rekam-medis');
 });
 
 Route::middleware('isDokter')->group(function () {
     Route::patch('/update-detil-rekam/{id}', [masterController::class, 'updateDetilRekam'])->name('update-detil-rekam');
+    Route::post('/create-detil-rekam/{id_rekam}', [masterController::class, 'createDetilRekam'])->name('create-detil-rekam-medis');
+    Route::delete('/delete-detil-rekam/{id}', [masterController::class, 'deleteDetilRekam'])->name('delete-detil-rekam');
 });
 
 //? LOGOUT ROUTE ?//
