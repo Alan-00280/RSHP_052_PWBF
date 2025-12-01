@@ -56,29 +56,30 @@
     {{-- Rekam mwedis --}}
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-success text-white">
-            <strong>[Edit] Rekam Medis</strong>
+            <strong id="edit-rekam-form">[Edit] Rekam Medis</strong>
         </div>
         <div class="card-body">
             <p><strong>Tanggal Pemeriksaan:</strong> {{ $rekam->created_at }}</p>
-            <form action="#" method="post">
+            <form action="{{ route('update-rekam-medis', ['id'=>$rekam->idrekam_medis]) }}" method="post">
+            @csrf
+            @method('PATCH')
             <div class="mb-3">
                 <label class="fw-bold">Anamnesa:</label>
-                <textarea class="border rounded p-2 bg-light" style="white-space: pre-wrap; display: block; width: 100%;" name="anamnesa" rows="8" aria-describedby="anamnesaHelp" required>{{ $rekam->anamnesa }}</textarea>
+                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="anamnesa" rows="8" aria-describedby="anamnesaHelp" required>{{ $rekam->anamnesa }}</textarea>
             </div>
 
             <div class="mb-3">
                 <label class="fw-bold">Temuan Klinis:</label>
-                <textarea class="border rounded p-2 bg-light" style="white-space: pre-wrap; display: block; width: 100%;" name="temu_klinis" rows="4" aria-describedby="temuanHelp" required>{{ $rekam->temuan_klinis }}</textarea>
+                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="temu_klinis" rows="4" aria-describedby="temuanHelp" required>{{ $rekam->temuan_klinis }}</textarea>
             </div>
 
             <div>
                 <label class="fw-bold">Diagnosa:</label>
-                <textarea class="border rounded p-2 bg-light" style="white-space: pre-wrap; display: block; width: 100%;" name="diagnosa" rows="4" aria-describedby="diagnosaHelp" required>{{ $rekam->diagnosa }}</textarea>
+                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="diagnosa" rows="4" aria-describedby="diagnosaHelp" required>{{ $rekam->diagnosa }}</textarea>
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
-                <input type="hidden" name="idrekam_medis" value="{{ $rekam->idrekam_medis }}" />
-                [<button type="reset" class="btn btn-info px-4 text-white" onclick="changeFormTitleStarred(true)">Reset</button>
+                [<button type="reset" class="btn btn-info px-4 text-white" onclick="changeFormTitleStarredRekam(true)">Reset</button>
                 <button type="submit" class="btn btn-primary px-4">Simpan</button>]
             </div>
             </form>
@@ -172,7 +173,7 @@
                     </tr>
 
                     {{-- Edit-Modal --}}
-                    <div class="modal fade modal-create" id="modalEdit{{ $d->iddetail_rekam_medis }}">
+                    <div class="modal fade modal-edit" id="modalEdit{{ $d->iddetail_rekam_medis }}">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <form action="{{ route('update-detil-rekam', ['id'=>$d->iddetail_rekam_medis]) }}" method="POST" class="form-edit">
@@ -249,6 +250,7 @@
 @endsection
 @section('page-script')
 <script>
+    // ubah judul form edit detil
     const changeFormTitleStarred = (modal, reset = false) => {
         const formTitle = modal.querySelector('#form-title');
         if (reset) {
@@ -257,7 +259,8 @@
         formTitle.innerText = (formTitle.innerText.includes('*')) ? formTitle.innerText : formTitle.innerText + '*';
     }
 
-    document.querySelectorAll('.modal-create')
+    // setting modal edit detil rekam
+    document.querySelectorAll('.modal-edit')
         .forEach(modal=>{
             modal.addEventListener('hidden.bs.modal', () => {
                 changeFormTitleStarred(modal, true);
@@ -266,6 +269,17 @@
             modal.querySelectorAll('textarea:not([disabled])').forEach(field=>{field.addEventListener('input', () => changeFormTitleStarred(modal))})
             document.querySelectorAll('select').forEach(field=>{field.addEventListener('change', () => changeFormTitleStarred(modal))})
         })
+
+    //setting edit form rekam
+    const changeFormTitleStarredRekam = (reset = false) => {
+        const formTitle = document.getElementById('edit-rekam-form');
+        if (reset) {
+            window.location.href = '#';
+            return formTitle.innerText = 'Edit Rekam Medis';
+        }
+        formTitle.innerText = (formTitle.innerText.includes('*')) ? formTitle.innerText : formTitle.innerText + '*';
+    }
+    const textareaFieldsRekam = document.querySelectorAll('textarea:not([disabled]).textarea-rekam').forEach(field=>{field.addEventListener('input', () => changeFormTitleStarredRekam())})
 
 
 </script>

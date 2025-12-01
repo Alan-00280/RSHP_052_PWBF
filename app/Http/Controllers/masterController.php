@@ -323,7 +323,20 @@ class masterController extends validationController
         }
     }
 
-    
+    public function updateRekamMedis(Request $request, $id) {
+        $validated = $this->validateRekamMedis($request);
+        try {
+            $rekam_medis = RekamMedis::findOrFail($id);
+            $rekam_medis->update([
+                'anamnesa' => $validated['anamnesa'],
+                'temuan_klinis' => $validated['temu_klinis'],
+                'diagnosa' => $validated['diagnosa']
+            ]);
+            return redirect()->route('detil-rkm-medis', ['id' => $id])->with('success', 'Berhasil mengupdate rekam medis');
+        } catch (\Exception $e) {
+            return redirect()->route('detil-rkm-medis', ['id' => $id])->with('error', 'Gagal menghapus: ' . $e->getMessage());
+        }
+    }
 
     public function updateDetilRekam(Request $request, $id) {
         $validated = $this->validateDetilRekam($request);

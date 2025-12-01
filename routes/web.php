@@ -113,6 +113,7 @@ Route::middleware('isResepsionis')->group(function () {
 Route::middleware('isPerawat')->group(function () { 
     Route::get('/get-temu/{id}', [masterController::class, 'getTemuDokterbyID'])->name('get-temu-by-id');
     Route::post('/create-rekam-medis', [masterController::class, 'createRekamMedis'])->name('create-rekam-medis');
+    Route::patch('/update-rekam-medis/{id}', [masterController::class, 'updateRekamMedis'])->name('update-rekam-medis');
 });
 
 Route::middleware('isDokter')->group(function () {
