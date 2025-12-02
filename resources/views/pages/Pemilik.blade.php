@@ -18,23 +18,7 @@
                 Daftarkan Pemilik
             </a>
         </div>
-
-        @if (session('success'))
-            <div class="position-fixed start-50 translate-middle-x mt-3 z-3" id="pop-message" style="top: 50px">
-                <div class="alert alert-success shadow">
-                    <strong>{{ session('success') }}</strong>
-                </div>
-            </div>
-        @endif
-        @if ($errors->any())
-            <div class="position-fixed start-50 translate-middle-x mt-3 z-3" id="pop-message-err" style="top: 50px">
-                <div class="alert alert-danger shadow">
-                    @foreach ($errors->all() as $message)
-                        <strong>{{ $message }}</strong> <br>
-                    @endforeach
-                </div>
-            </div>
-        @endif
+        
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 {{-- <x-logger :object="$pets" /> --}}
@@ -205,23 +189,6 @@
 
 @section('page-script')
     <script>
-        setTimeout(() => {
-            const el = document.getElementById('pop-message');
-            if (el) {
-                el.style.transition = 'opacity 0.5s';
-                el.style.opacity = 0;
-                setTimeout(() => el.remove(), 500);
-            }
-        }, 1500);
-        setTimeout(() => {
-            const el_err = document.getElementById('pop-message-err');
-            if (el_err) {
-                el_err.style.transition = 'opacity 0.5s';
-                el_err.style.opacity = 0;
-                setTimeout(() => el_err.remove(), 500);
-            }
-        }, 3000);
-
         const changeIdStarred = (id, reset = false) => {
             const idNumber = document.getElementById('id-' + id);
             if (reset) {

@@ -132,7 +132,7 @@
               <x-layout.navigations.adminnav />
               @break
           @case('2')
-              {{-- @include('pages.dashboard.dokter') --}}
+              <x-layout.navigations.dokternav />
               @break
           @case('3')
               {{-- @include('pages.dashboard.perawat') --}}
@@ -152,6 +152,16 @@
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          {{-- Alert Message --}}
+          <x-successAlert :message="session('success')" />
+
+          @if(session('error'))
+              <x-error-alert :errors="session('error')" type="global" />
+          @endif
+
+          <x-error-alert :errors="$errors" />
+
+
           @yield('content')
         </div>
       <!-- content-wrapper ends -->

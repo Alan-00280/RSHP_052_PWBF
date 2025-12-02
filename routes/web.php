@@ -49,6 +49,12 @@ Route::middleware([])->prefix('/dashboard')->group(function () {
     
 });
 
+//? VIEW ONLY PAGES ?//
+Route::middleware([])->prefix('/dashboard/view')->group(function () {
+    Route::get('/pemilik', [siteController::class, 'viewPemilik'])->name('view-pemilik');
+    Route::get('/pet', [siteController::class, 'viewPet'])->name('view-pet');
+});
+
 // 1. client login
 // 2. di LoginController() ngecek role aktif nya apa
 // 3. Redirect ke /dashboard/[role] --> ini akan sesuai role nya tadi

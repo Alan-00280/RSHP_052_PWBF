@@ -17,19 +17,12 @@
 
 @section('content')
 
-    <x-successAlert :message="session('success')" />
-
-    @if(session('error')){
-        <x-error-alert :errors="session('error')" type="global" />
-    }
-    @endif
-
-    <x-error-alert :errors="$errors" />
-
+    
     <div class="overflow-x-auto">
         <div class="flex w-full justify-end">
             <a class="btn btn-primary !bg-gray-400 !border-0 !text-gray-900 hover:!bg-gray-600 transition-all ease-in mb-3"
                 href="{{ route('dashboard') }}" role="button">Dashboard</a>
+            @if (\in_array($role_id, [1, 3]))
             <a name="" 
                 id="" 
                 class="btn btn-success mb-3 text-light" 
@@ -40,6 +33,7 @@
                 <span class="mdi mdi-plus"></span>
                 Tambah Rekam Medis
             </a>
+            @endif
         </div>
        
         <div class="col-lg-12 grid-margin stretch-card">
@@ -60,7 +54,9 @@
                                     <th class="px-4 py-3 text-left font-semibold text-gray-700">Status</th>
                                     <th class="px-4 py-3 text-left font-semibold text-gray-700">Tanggal</th>
                                     <th class="px-4 py-3 text-left font-semibold text-gray-700">Pasien (Pemilik - Pet)</th>
+                                    @if (\in_array($role_id, [1, 3]))
                                     <th class="px-4 py-3 text-left font-semibold text-gray-700">Dokter Pemeriksa</th>
+                                    @endif
                                     <th class="px-4 py-3 text-center font-semibold text-gray-700">Detail</th>
                                 </tr>
                             </thead>
@@ -98,15 +94,17 @@
                                             {{ $item->TemuDokter->Pet->Pemilik->User->nama }} - {{ $item->TemuDokter->Pet->nama }}
                                         </td>
 
+                                        @if (\in_array($role_id, [1, 3]))
                                         {{-- Dokter Pemeriksa --}}
                                         <td class="px-4 py-2 text-gray-800">
                                             {{ $item->DokterPemeriksa->user->nama ?? '-' }}
                                         </td>
+                                        @endif
 
                                         {{-- Action --}}
                                         <td class="px-4 py-2 text-center">
                                             <a href="{{ route('detil-rkm-medis', ['id' => $item->idrekam_medis]) }}"
-                                                class="btn btn-info btn-sm">
+                                                class="btn btn-info btn-sm text-white">
                                                 Detail
                                             </a>
                                         </td>

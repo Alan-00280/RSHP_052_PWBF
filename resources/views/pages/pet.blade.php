@@ -1,18 +1,8 @@
 @extends('layouts.skydash.index')
 
-@section('title', 'Jenis Hewan')
+@section('title', 'Pet Pemilik')
 
 @section('content')
-
-    {{-- @dd($pets) --}}
-    <x-successAlert :message="session('success')" />
-
-    @if(session('error')){
-        <x-error-alert :errors="session('error')" type="global" />
-    }
-    @endif
-
-    <x-error-alert :errors="$errors" />
 
     <div class="overflow-x-auto">
         <div class="flex w-full justify-end">

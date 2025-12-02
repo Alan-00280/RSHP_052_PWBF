@@ -4,22 +4,14 @@
 
 @section('content')
 
-    <x-successAlert :message="session('success')" />
-
-    @if(session('error')){
-        <x-error-alert :errors="session('error')" type="global" />
-    }
-    @endif
-
-    <x-error-alert :errors="$errors" />
-
+    
     <div class="overflow-x-auto">
         <div class="flex w-full justify-end">
             <a class="btn btn-primary !bg-gray-400 !border-0 !text-gray-900 hover:!bg-gray-600 transition-all ease-in mb-3"
                 href="{{ route('dashboard') }}" role="button">Dashboard
             </a>
             <a class="btn btn-primary !bg-gray-400 !border-0 !text-gray-900 hover:!bg-gray-600 transition-all ease-in mb-3"
-                onclick="window.history.back()" role="button">Back
+                href="{{ route('rekam-medis') }}" role="button">Back
             </a>
         </div>
         {{-- <x-logger :object="$rekam" /> --}}
@@ -56,8 +48,8 @@
     {{-- Rekam mwedis --}}
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
-            <strong id="edit-rekam-form" style="display: inline-block">[Edit] Rekam Medis #{{ $rekam->idrekam_medis }}</strong>
-            [
+            <strong id="edit-rekam-form" style="display: inline-block">{{ \in_array($role_id, [1, 3]) ? 'Edit' : '' }} Rekam Medis #{{ $rekam->idrekam_medis }}</strong>
+            @if (\in_array($role_id, [1, 3]))
             <div>
                 <button 
                     class="btn btn-danger text-white btn-delete p-2"
@@ -67,7 +59,7 @@
                     ><span class="mdi mdi-delete-outline"></span> Delete
                 </button>
             </div>
-            ]
+            @endif
         </div>
         <div class="card-body">
             <p><strong>Tanggal Pemeriksaan:</strong> {{ $rekam->created_at }}</p>
@@ -76,23 +68,25 @@
             @method('PATCH')
             <div class="mb-3">
                 <label class="fw-bold">Anamnesa:</label>
-                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="anamnesa" rows="8" aria-describedby="anamnesaHelp" required>{{ $rekam->anamnesa }}</textarea>
+                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="anamnesa" rows="8" aria-describedby="anamnesaHelp" {{ \in_array($role_id, [1, 3]) ? 'required' : 'disabled' }}>{{ $rekam->anamnesa }}</textarea>
             </div>
 
             <div class="mb-3">
                 <label class="fw-bold">Temuan Klinis:</label>
-                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="temu_klinis" rows="4" aria-describedby="temuanHelp" required>{{ $rekam->temuan_klinis }}</textarea>
+                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="temu_klinis" rows="4" aria-describedby="temuanHelp" {{ \in_array($role_id, [1, 3]) ? 'required' : 'disabled' }}>{{ $rekam->temuan_klinis }}</textarea>
             </div>
 
             <div>
                 <label class="fw-bold">Diagnosa:</label>
-                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="diagnosa" rows="4" aria-describedby="diagnosaHelp" required>{{ $rekam->diagnosa }}</textarea>
+                <textarea class="border rounded p-2 bg-light textarea-rekam" style="white-space: pre-wrap; display: block; width: 100%;" name="diagnosa" rows="4" aria-describedby="diagnosaHelp" {{ \in_array($role_id, [1, 3]) ? 'required' : 'disabled' }}>{{ $rekam->diagnosa }}</textarea>
             </div>
 
+            @if (\in_array($role_id, [1, 3]))
             <div class="d-flex justify-content-end gap-2 mt-4">
-                [<button type="reset" class="btn btn-info px-4 text-white" onclick="changeFormTitleStarredRekam(true)">Reset</button>
-                <button type="submit" class="btn btn-primary px-4">Simpan</button>]
+                <button type="reset" class="btn btn-info px-4 text-white" onclick="changeFormTitleStarredRekam(true)">Reset</button>
+                <button type="submit" class="btn btn-primary px-4">Simpan</button>
             </div>
+            @endif
             </form>
         </div>
     </div>
@@ -103,9 +97,11 @@
             <strong>Detail Tindakan Terapi</strong>
 
             {{-- Tambah Tindakan --}}
-            (<button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambahDetilRekam">
+            @if (\in_array($role_id, [1, 2]))
+            <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambahDetilRekam">
                 + Tambah Tindakan
-            </button>)
+            </button>
+            @endif
         </div>
 
         {{-- Createdetil-Modal --}}
@@ -157,22 +153,32 @@
                         <th>Kode</th>
                         <th>Deskripsi Tindakan</th>
                         <th>Detail</th>
-                        <th style="width: 130px;">(Aksi)</th>
+                        @if (\in_array($role_id, [1, 2]))
+                        <th style="width: 130px;">Aksi</th>
+                        @endif
                     </tr>
                 </thead>
 
                 <tbody>
+                @if (count($detil_rekam_medis) > 0)
                 @foreach ($detil_rekam_medis as $idx => $d)
                     <tr>
                         <td>{{ \intval($idx) + 1 }}</td>
                         <td>{{ $d->KodeTindakanTerapi->kode }}</td>
-                        <td>{{ $d->KodeTindakanTerapi->deskripsi_tindakan_terapi }}</td>
-                        <td>{{ $d->detail }}</td>
-
+                        <td>
+                            <span style=" max-width: 200px; overflow-wrap: break-word; white-space: normal;">
+                            {{ $d->KodeTindakanTerapi->deskripsi_tindakan_terapi }}
+                            </span>
+                        </td>
+                        <td>
+                            <span style=" max-width: 200px; overflow-wrap: break-word; white-space: normal;">{{ $d->detail }}</span>
+                        </td>
+                        
+                        @if (\in_array($role_id, [1, 2]))
                         <td>
                             <div class="btn-group">
                                 {{-- Edit --}}
-                                (<button class="btn btn-sm btn-warning"
+                                <button class="btn btn-sm btn-warning"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalEdit{{ $d->iddetail_rekam_medis }}">
                                     Edit
@@ -183,9 +189,10 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalDelete{{ $d->iddetail_rekam_medis }}">
                                     Hapus
-                                </button>)
+                                </button>
                             </div>
                         </td>
+                        @endif
                     </tr>
 
                     {{-- Edit-Modal --}}
@@ -260,6 +267,15 @@
                     </div>
 
                 @endforeach
+                @else
+                <tr>
+                    <td><em>No Data . . .</em></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                @endif
                 </tbody>
             </table>
         </div>

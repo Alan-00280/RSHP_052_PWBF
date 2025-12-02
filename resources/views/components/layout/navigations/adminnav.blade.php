@@ -1,5 +1,3 @@
-
-
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">         <x-layout.navlinksingle icon="mdi mdi-grid-large" text="Dashboard" href="/{{ (Auth::user()) ? 'idashboard' : 'login' }}" />
 

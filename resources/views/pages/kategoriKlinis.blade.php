@@ -3,15 +3,7 @@
 @section('title', 'Kategori Klinis')
 
 @section('content')
-    <x-successAlert :message="session('success')" />
-
-    @if(session('error')){
-        <x-error-alert :errors="session('error')" type="global" />
-    }
-    @endif
-
-    <x-error-alert :errors="$errors" />
-
+    
     <div class="overflow-x-auto">
         <div class="flex w-full justify-end">
             <a class="btn btn-primary !bg-gray-400 !border-0 !text-gray-900 hover:!bg-gray-600 transition-all ease-in mb-3"

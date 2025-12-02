@@ -4,15 +4,7 @@
 
 @section('content')
 
-    <x-successAlert :message="session('success')" />
-
-    @if(session('error')){
-        <x-error-alert :errors="session('error')" type="global" />
-    }
-    @endif
-
-    <x-error-alert :errors="$errors" />
-
+    
     <div class="overflow-x-auto">
         <div class="flex w-full justify-end">
             <a class="btn btn-primary !bg-gray-400 !border-0 !text-gray-900 hover:!bg-gray-600 transition-all ease-in mb-3"
@@ -31,7 +23,7 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Kategori Klinis</h4>
+                    <h4 class="card-title">Kode Tindakan Terapi</h4>
                     <div class="table-responsive">
                     <table class="table table-striped">
                         <thead class="bg-gray-100">
