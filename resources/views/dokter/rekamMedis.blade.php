@@ -76,12 +76,14 @@
 
                                         {{-- Status --}}
                                         <td class="px-4 py-2 text-gray-800" style="min-width: 150px">
-                                            <select class="form-select form-select-sm text-black" name="status"
-                                                data-id="{{ $item->TemuDokter->idreservasi_dokter }}">
-                                                <option value="W" {{ $item->TemuDokter->status == 'W' ? 'selected' : '' }} disabled>Waiting</option>
-                                                <option value="R" {{ $item->TemuDokter->status == 'R' ? 'selected' : '' }}>Terekam</option>
-                                                <option value="D" {{ $item->TemuDokter->status == 'D' ? 'selected' : '' }}>Selesai</option>
-                                            </select>
+                                            <form action="{{ route('update-status-temu', ['id' => $item->TemuDokter->idreservasi_dokter]) }}" method="POST" id="change-status-{{ $item->TemuDokter->idreservasi_dokter }}">
+                                                @csrf
+                                                <select class="form-select form-select-sm text-black select-status" name="status" data-id="{{ $item->TemuDokter->idreservasi_dokter }}">
+                                                    <option value="W" {{ $item->TemuDokter->status == 'W' ? 'selected' : '' }} disabled>Waiting</option>
+                                                    <option value="R" {{ $item->TemuDokter->status == 'R' ? 'selected' : '' }}>Terekam</option>
+                                                    <option value="D" {{ $item->TemuDokter->status == 'D' ? 'selected' : '' }}>Selesai</option>
+                                                </select>
+                                            </form>
                                         </td>
 
                                         {{-- Tanggal Dibuat --}}
@@ -155,6 +157,15 @@
 @endsection
 @section('page-script')
     <script>
+        const changeStatusTemu = async (e) => {
+            const formStatus = document.getElementById(`change-status-${e.currentTarget.dataset.id}`)
+            try {
+                formStatus.submit()
+            } catch (error) {
+                console.log(JSON.stringify(error));
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Delete modal prep
             const deleteButton = document.querySelectorAll('.btn-delete')
@@ -170,7 +181,12 @@
                 kategoriNama.innerText = nama;
                 })
             });
-                    
+            
+            //select status
+            const selectStatus = document.querySelectorAll('.select-status')
+            selectStatus.forEach(i=>(
+                i.addEventListener('change', (e) => changeStatusTemu(e))
+            ))
         })
         
         const temuDokterResult = document.getElementById('temu-dokter')

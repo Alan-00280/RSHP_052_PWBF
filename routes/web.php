@@ -116,6 +116,10 @@ Route::middleware('isResepsionis')->group(function () {
     Route::delete('/delete-temu-dok/{id}', [masterController::class, 'deleteTemuDokter'])->name('delete-temu-dokter');
 });
 
+Route::middleware([])->group(function () {
+    Route::post('/change-status-temu/{id}', [masterController::class, 'changeStatusTemu'])->name('update-status-temu');
+});
+
 Route::middleware('isPerawat')->group(function () { 
     Route::get('/get-temu/{id}', [masterController::class, 'getTemuDokterbyID'])->name('get-temu-by-id');
 

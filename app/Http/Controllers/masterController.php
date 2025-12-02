@@ -386,4 +386,19 @@ class masterController extends validationController
             return redirect()->route('detil-rkm-medis', ['id' => $request->get('idrekam_medis')])->with('error', 'Gagal menghapus: ' . $e->getMessage());
         }
     }
+
+    public function changeStatusTemu(Request $request, $id) {
+        $request->validate([
+            'status' => 'required|size:1|string'
+        ]);
+        try {
+            $temu_dokter = TemuDokter::findOrFail($id);
+            $temu_dokter->update([
+                'status' => $request->get('status')
+            ]);
+            return redirect()->route('rekam-medis')->with('success', 'Berhasil mengupdate status');
+        } catch (\Exception $e) {
+            return redirect()->route('rekam-medis')->with('error', 'Gagal mengupdate: ' . $e->getMessage());
+        }
+    }
 }

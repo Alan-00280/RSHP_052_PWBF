@@ -135,7 +135,7 @@
               <x-layout.navigations.dokternav />
               @break
           @case('3')
-              {{-- @include('pages.dashboard.perawat') --}}
+              <x-layout.navigations.perawatnav />
               @break
           @case('4')
               {{-- @include('pages.dashboard.resepsionis') --}}
