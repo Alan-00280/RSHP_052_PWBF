@@ -18,7 +18,7 @@
                                 <img src="{{ asset('images/user/bathGemini_Generated_Image_a70mpka70mpka70m.png') }}" alt="profile_img"
                                     class="rounded-circle" width="150">
                                 <div class="mt-3">
-                                    <h4>{{ $pemilik_data->UserRshp->nama }}</h4>
+                                    <h4>{{ $pemilik_data->User->nama }}</h4>
                                     <p class="text-muted font-size-sm">{{ $pemilik_data->alamat }}</p>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                     <h6 class="mb-0">Nama Lengkap</h6>
                                 </div>
                                 <div class="col-sm-9 text-black">
-                                    {{ $pemilik_data->UserRshp->nama }} 
+                                    {{ $pemilik_data->User->nama }} 
                                 </div>
                             </div>
 
@@ -48,7 +48,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-black">
-                                    {{ $pemilik_data->UserRshp->email }}
+                                    {{ $pemilik_data->User->email }}
                                 </div>
                             </div>
                             <hr>

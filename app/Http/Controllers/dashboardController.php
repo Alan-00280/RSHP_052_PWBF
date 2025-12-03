@@ -156,7 +156,7 @@ class dashboardController extends Controller
     }
 
     public function profilPemilik() {
-        $pemilik_data = Pemilik::where('iduser', Auth::user()->iduser)->with(['UserRshp'])->first();
+        $pemilik_data = Pemilik::where('iduser', Auth::user()->iduser)->with(['User'])->first();
         return view('pemilik.profile', [
             'pemilik_data' => $pemilik_data
         ]);
