@@ -1,5 +1,6 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <ul class="nav">         <x-layout.navlinksingle icon="mdi mdi-grid-large" text="Dashboard" href="/{{ (Auth::user()) ? 'idashboard' : 'login' }}" />
+    <ul class="nav">         
+        <x-layout.navlinksingle icon="mdi mdi-grid-large" text="Dashboard" href="/{{ (Auth::user()) ? 'idashboard' : 'login' }}" />
 
         <x-layout.navcollapsewrap icon="mdi mdi-account-group" text="User" id="pengguna">
             <x-layout.navcollapseitem href="{{ route('user-data') }}" text="User Data" />

@@ -23,4 +23,12 @@ class UserRshp extends Authenticatable
     public function RoleUser() {
         return $this->hasMany(RoleUser::class, 'iduser');
     }
+
+    public function Dokter() {
+        return $this->hasMany(Dokter::class, 'id_user');
+    }
+
+    public function Perawat() {
+        return $this->hasMany(Perawat::class, 'id_user');
+    }
 }

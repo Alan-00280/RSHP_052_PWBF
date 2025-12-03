@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailRekamMedis;
+use App\Models\Dokter;
 use App\Models\jenisHewan;
 use App\Models\Kategori;
 use App\Models\KategoriKlinis;
 use App\Models\KodeTindakanTerapi;
 use App\Models\Pemilik;
+use App\Models\Perawat;
 use App\Models\Pet;
 use App\Models\rasHewan;
 use App\Models\RekamMedis;
@@ -399,6 +401,50 @@ class masterController extends validationController
             return redirect()->route('rekam-medis')->with('success', 'Berhasil mengupdate status');
         } catch (\Exception $e) {
             return redirect()->route('rekam-medis')->with('error', 'Gagal mengupdate: ' . $e->getMessage());
+        }
+    }
+
+    public function updateProfilDokter(Request $request, $id) {
+        $validated = $this->validateProfileDokter($request, $id);
+        try {
+            $user_rshp = UserRshp::findOrFail($id);
+            $dokter_record = Dokter::where('id_user', $user_rshp->iduser);
+
+            $user_rshp->update([
+                'nama' => $validated['nama'],
+                'email' => $validated['email']
+            ]);
+            $dokter_record->update([
+                'alamat' => $validated['alamat'],
+                'no_hp' => $validated['no_hp'],
+                'bidang_dokter' => $validated['bidang']
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil mengupdate profil dokter');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengupdate: ' . $e->getMessage());
+        }
+    }
+
+    public function updateProfilePerawat(Request $request, $id) {
+        $validated = $this->validateProfilePerawat($request, $id);
+        try {
+            $user_rshp = UserRshp::findOrFail($id);
+            $perawat_record = Perawat::where('id_user', $user_rshp->iduser);
+
+            $user_rshp->update([
+                'nama' => $validated['nama'],
+                'email' => $validated['email']
+            ]);
+            $perawat_record->update([
+                'alamat' => $validated['alamat'],
+                'no_hp' => $validated['no_hp'],
+                'pendidikan' => $validated['pendidikan']
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil mengupdate profil perawat');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengupdate: ' . $e->getMessage());
         }
     }
 }

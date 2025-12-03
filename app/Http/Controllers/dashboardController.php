@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dokter;
 use App\Models\jenisHewan;
 use App\Models\Kategori;
 use App\Models\KategoriKlinis;
 use App\Models\KodeTindakanTerapi;
 use App\Models\Pemilik;
+use App\Models\Perawat;
 use App\Models\Pet;
 use App\Models\rasHewan;
 use App\Models\RekamMedis;
@@ -137,5 +139,19 @@ class dashboardController extends Controller
                 'pemiliks' => Pemilik::with('User')->get()
             ]
         );
+    }
+
+    public function profileDoktor()  {
+        $dokter_data = Dokter::where('id_user', Auth::user()->iduser)->with(['UserRshp'])->first();
+        return view('dokter.profile', [
+            'dokter_data' => $dokter_data
+        ]);
+    }
+
+    public function profilePerawat()  {
+        $perawat_data = Perawat::where('id_user', Auth::user()->iduser)->with(['UserRshp'])->first();
+        return view('perawat.profile', [
+            'perawat_data' => $perawat_data
+        ]);
     }
 }

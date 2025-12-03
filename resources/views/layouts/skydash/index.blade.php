@@ -138,7 +138,7 @@
               <x-layout.navigations.perawatnav />
               @break
           @case('4')
-              {{-- @include('pages.dashboard.resepsionis') --}}
+              <x-layout.navigations.resepsionisnav />
               @break
           @case('5')
               {{-- @include('pages.dashboard.pemilik') --}}

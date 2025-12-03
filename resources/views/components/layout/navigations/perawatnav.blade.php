@@ -9,7 +9,7 @@
 
         <x-layout.navlinksingle icon="mdi mdi-clipboard-list-outline" text="Rekam Medis" href="{{ route('rekam-medis') }}"/>
         
-        <x-layout.navlinksingle icon="mdi mdi-account-circle-outline" text="Profile" href="#"/>
+        <x-layout.navlinksingle icon="mdi mdi-account-circle-outline" text="Profile" href="{{ route('profile-perawat') }}"/>
 
         {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">

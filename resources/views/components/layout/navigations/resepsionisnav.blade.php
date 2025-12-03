@@ -3,13 +3,11 @@
         <x-layout.navlinksingle icon="mdi mdi-grid-large" text="Dashboard" href="/{{ (Auth::user()) ? 'idashboard' : 'login' }}" />
 
         <x-layout.navcollapsewrap icon="mdi mdi-account-heart" text="Pasien" id="pasien">
-            <x-layout.navcollapseitem href="{{ route('view-pemilik') }}" text="Pemilik" />
-            <x-layout.navcollapseitem href="{{ route('view-pet') }}" text="Pet" />
+            <x-layout.navcollapseitem href="{{ route('pemilik-resep') }}" text="Pemilik" />
+            <x-layout.navcollapseitem href="{{ route('pet') }}" text="Pet" />
         </x-layout.navcollapsewrap>
 
-        <x-layout.navlinksingle icon="mdi mdi-clipboard-list-outline" text="Rekam Medis" href="{{ route('rekam-medis') }}"/>
-        
-        <x-layout.navlinksingle icon="mdi mdi-account-circle-outline" text="Profile" href="{{ route('profile-dokter') }}"/>
+        <x-layout.navlinksingle icon="mdi mdi-calendar" text="Temu Dokter" href="{{ route('temu-dokter') }}" />
 
         {{-- <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">

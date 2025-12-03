@@ -41,6 +41,15 @@ Route::middleware('isResepsionis')->prefix('/dashboard/resepsionis')->group(func
     Route::get('/pet', [dashboardController::class, 'Pet'])->name('pet');
 });
 
+Route::middleware('isDokter')->prefix('/dashboard/dokter')->group(function () {
+    Route::get('/profile', [dashboardController::class, 'profileDoktor'])->name('profile-dokter');
+    Route::get('/edit', [siteController::class, 'editProfileDoktor'])->name('edit-dokter');
+});
+
+Route::middleware('isPerawat')->prefix('/dasboard/perawat')->group(function () {
+    Route::get('/profile', [dashboardController::class, 'profilePerawat'])->name('profile-perawat');
+});
+
 //? Rekam Medis ?// 
 Route::middleware([])->prefix('/dashboard')->group(function () {
 
@@ -76,6 +85,7 @@ Route::middleware('isResepsionis')->prefix('/resepsionis')->group(function () {
 Route::middleware('isPerawat')->prefix('/perawat')->group
 (function () {
     Route::get('/create-rekam/{id}', [siteController::class, 'createRekamMedis'])->name('create-rekam');
+    Route::get('/profile/edit', [siteController::class, 'editProfilePerawat'])->name('edit-profile-perawat');
 });
 
 //? API ROUTES ?//
@@ -126,12 +136,16 @@ Route::middleware('isPerawat')->group(function () {
     Route::post('/create-rekam-medis', [masterController::class, 'createRekamMedis'])->name('create-rekam-medis');
     Route::patch('/update-rekam-medis/{id}', [masterController::class, 'updateRekamMedis'])->name('update-rekam-medis');
     Route::delete('/delete-rekam/{id}', [masterController::class, 'deleteRekamMedis'])->name('delete-rekam-medis');
+
+    Route::patch('/update-profile-perawat/{id}', [masterController::class, 'updateProfilePerawat'])->name('update-profil-perawat');
 });
 
 Route::middleware('isDokter')->group(function () {
     Route::patch('/update-detil-rekam/{id}', [masterController::class, 'updateDetilRekam'])->name('update-detil-rekam');
     Route::post('/create-detil-rekam/{id_rekam}', [masterController::class, 'createDetilRekam'])->name('create-detil-rekam-medis');
     Route::delete('/delete-detil-rekam/{id}', [masterController::class, 'deleteDetilRekam'])->name('delete-detil-rekam');
+
+    Route::patch('/update-profil/{id}', [masterController::class, 'updateProfilDokter'])->name('update-profil-dokter');
 });
 
 //? LOGOUT ROUTE ?//

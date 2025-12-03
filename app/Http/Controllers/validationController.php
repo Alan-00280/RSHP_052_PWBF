@@ -78,4 +78,26 @@ class validationController extends Controller
             'detail' => 'required|min:3|max:255|string'
         ]);
     }
+
+    protected function validateProfileDokter(Request $request, $id=null) {
+        $uniqueRule = $id ? 'unique:user,email,'.$id.',iduser' : 'unique:user,email';
+        return $request->validate([
+            'nama' => 'required|min:3|max:100|string',
+            'email' => 'required|email|'.$uniqueRule,
+            'no_hp' => 'required|digits_between:10,14',
+            'bidang' => 'required|min:3|max:255|string',
+            'alamat' => 'required|min:3|max:255|string',
+        ]);
+    }
+
+    protected function validateProfilePerawat(Request $request, $id=null) {
+        $uniqueRule = $id ? 'unique:user,email,'.$id.',iduser' : 'unique:user,email';
+        return $request->validate([
+            'nama' => 'required|min:3|max:100|string',
+            'email' => 'required|email|'.$uniqueRule,
+            'no_hp' => 'required|digits_between:10,14',
+            'pendidikan' => 'required|min:3|max:255|string',
+            'alamat' => 'required|min:3|max:255|string',
+        ]);
+    }
 }
