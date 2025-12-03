@@ -11,7 +11,7 @@ class Pemilik extends Model
     protected $guarded = ['idpemilik'];
     public $timestamps = false;
 
-    public function User() {
+    public function UserRshp() {
         return $this->belongsTo(UserRshp::class, 'iduser');
     }
 

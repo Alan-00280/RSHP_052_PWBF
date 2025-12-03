@@ -22,7 +22,7 @@ class isPemilik
             return redirect(route('login'));
         }
 
-        if ( Session::get('role_id') !== 5) {
+        if ( Session::get('role_id') !== '5') {
             return back()->with('error', 'Akses ditolak!');
         }
 

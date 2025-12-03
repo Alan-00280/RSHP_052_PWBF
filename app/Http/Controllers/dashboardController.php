@@ -154,4 +154,11 @@ class dashboardController extends Controller
             'perawat_data' => $perawat_data
         ]);
     }
+
+    public function profilPemilik() {
+        $pemilik_data = Pemilik::where('iduser', Auth::user()->iduser)->with(['UserRshp'])->first();
+        return view('pemilik.profile', [
+            'pemilik_data' => $pemilik_data
+        ]);
+    }
 }

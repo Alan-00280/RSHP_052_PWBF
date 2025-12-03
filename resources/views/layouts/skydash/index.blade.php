@@ -103,7 +103,14 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-              <img src="{{ asset('images/user/9e1b64a3a8797626e6a80b589c946e96.jpg') }}" alt="profile" />
+              @php
+                if (Session::get('role_id') == '5') {
+                  $src_img_profil = 'images/user/bathGemini_Generated_Image_a70mpka70mpka70m.png';
+                } else {
+                  $src_img_profil = 'images/user/9e1b64a3a8797626e6a80b589c946e96.jpg';
+                }
+              @endphp
+              <img src="{{ asset($src_img_profil) }}" alt="profile" />
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
@@ -141,7 +148,7 @@
               <x-layout.navigations.resepsionisnav />
               @break
           @case('5')
-              {{-- @include('pages.dashboard.pemilik') --}}
+              <x-layout.navigations.pemiliknav />
               @break
           @default
               <h1>401 - Unauthorized</h1>

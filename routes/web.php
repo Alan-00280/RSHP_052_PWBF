@@ -64,6 +64,15 @@ Route::middleware([])->prefix('/dashboard/view')->group(function () {
     Route::get('/pet', [siteController::class, 'viewPet'])->name('view-pet');
 });
 
+//? Pemilik ?//
+Route::middleware('isPemilik')->prefix('/pemilik')->group( function () {
+    Route::get('/show-pet', [siteController::class, 'showPetPemilik'])->name('show-pet-pemilik');
+    Route::get('/temu-dokter', [siteController::class, 'temuDokterPemilik'])->name('temu-dokter-pemilik');
+    Route::get('/rekam-medis', [siteController::class, 'rekamMedisPemilik'])->name('rekam-medis-pemilik');
+    Route::get('/rekam-medis/{id_temu_dokter}', [siteController::class, 'detailRekamPemilik'])->name('detail-rekam-pemilik');
+    Route::get('/profil', [dashboardController::class, 'profilPemilik'])->name('profile-pemilik');
+});
+
 // 1. client login
 // 2. di LoginController() ngecek role aktif nya apa
 // 3. Redirect ke /dashboard/[role] --> ini akan sesuai role nya tadi

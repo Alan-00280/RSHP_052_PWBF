@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
+use Str;
 
 class masterController extends validationController
 {
@@ -94,7 +95,7 @@ class masterController extends validationController
             $user_create = UserRshp::create([
                 'nama' => $validated['nama'],
                 'email' => $validated['email'],
-                'password' => 'null'
+                'password' => Str::before($validated['email'], '@')
             ]);
 
             $pemilik_create = Pemilik::create([

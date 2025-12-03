@@ -21,7 +21,7 @@ class Pet extends Model
     }
 
     public function TemuDokter() {
-        return $this->hasOne(TemuDokter::class, 'idreservasi_dokter');
+        return $this->hasOne(TemuDokter::class, 'idpet');
     }
 
 }

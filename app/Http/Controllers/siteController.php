@@ -170,4 +170,35 @@ class siteController extends Controller
         ]);
     }
 
+    public function showPetPemilik() {
+        $id_pemilik = Auth::user()->Pemilik->idpemilik;
+        $pets = DB::select('SELECT * FROM pet_detail WHERE idpemilik = ?', [$id_pemilik]);
+        return view('pages.view_only.showPet', [
+            'pets' => $pets
+        ]);
+    }
+
+    public function temuDokterPemilik() {
+        $id_pemilik = Auth::user()->Pemilik->idpemilik;
+        $temu_dokter = Pet::where('idpemilik', $id_pemilik)->with(['TemuDokter'])->get();
+        return view('pages.view_only.temuDokterPemilik', [
+            'temu_dokters' => $temu_dokter
+        ]);
+    }
+    
+    public function rekamMedisPemilik() {
+        $id_pemilik = Auth::user()->Pemilik->idpemilik;
+        $rekam_medises = Pet::where('idpemilik', $id_pemilik)->with(['TemuDokter.RekamMedis'])->get();
+        return view('pages.view_only.rekamMedisPemilik', [
+            'rekam_medises' => $rekam_medises
+        ]);
+    }
+
+    public function detailRekamPemilik(Request $request, $id_temu_dokter) {
+        $detail_rekam_medises = RekamMedis::where('idreservasi_dokter', $id_temu_dokter)->with('DetailRekamMedis.KodeTindakanTerapi.Kategori')->first(); 
+        return view('pages.view_only.showRekamPemilik', [
+            'detail_rekam_medises' => $detail_rekam_medises
+        ]);
+    }
+
 }

@@ -28,9 +28,9 @@ class LoginController extends Controller
         $activeRoleUser = RoleUser::where('iduser', $user->iduser)->where('status', 1)->with('Role')->first();
 
         $request->session()->put([
-            'user_role_id' => $activeRoleUser->idrole_user,
-            'role_id' => $activeRoleUser->Role->idrole,
-            'role_name' => $activeRoleUser->Role->nama_role
+            'user_role_id' => $activeRoleUser->idrole_user??'pemilik_role',
+            'role_id' => $activeRoleUser->Role->idrole??'5',
+            'role_name' => $activeRoleUser->Role->nama_role??'pemilik'
         ]);
     }
 
