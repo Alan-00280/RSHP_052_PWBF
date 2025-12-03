@@ -16,6 +16,7 @@ use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\TemuDokter;
 use App\Models\UserRshp;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -31,7 +32,11 @@ class dashboardController extends Controller
 
         $role_id = Session::get('role_id');
         return view('pages.index', [
-            'role_id' => $role_id
+            'role_id' => $role_id,
+            'total_pemilik' => DB::select('SELECT COUNT(*) AS jumlah FROM pemilik'),
+            'total_pet' => DB::select('SELECT COUNT(*) AS jumlah FROM pet'),
+            'total_temu_dokter' => DB::select('SELECT COUNT(*) AS jumlah FROM temu_dokter'),
+            'total_rekam_medis' => DB::select('SELECT COUNT(*) AS jumlah FROM rekam_medis')
         ]);
     }
 
