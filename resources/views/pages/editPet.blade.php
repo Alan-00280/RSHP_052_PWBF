@@ -5,6 +5,7 @@
 @section('content')
     
     <h1>Edit Pet #{{ $id }}</h1>
+    <a href="{{ route('pet') }}" class="btn btn-primary mb-2">Back</a>
 
     {{-- <x-logger :object="$pet_detail" /> --}}
 

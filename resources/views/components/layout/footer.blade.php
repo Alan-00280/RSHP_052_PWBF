@@ -17,6 +17,6 @@
 
     {{-- Garis pemisah kecil di bawah --}}
     <div class="border-t border-gray-700 mt-6 pt-4 text-center text-xs text-gray-500">
-        Built with ❤️ by Alan using Laravel Tailwind Bootstrap CSS
+        Built with ❤️ by Alan using Laravel Bootstrap CSS
     </div>
 </footer>

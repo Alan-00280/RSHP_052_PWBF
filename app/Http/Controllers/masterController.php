@@ -65,9 +65,11 @@ class masterController extends validationController
     }
 
     public function patchPemilik(Request $request, $id) {
-        $validated = $this->validatePemilik($request);
+        $pemilik = Pemilik::where('idpemilik', $id)->with(['User'])->first();
+        // dd($pemilik);
 
-        $pemilik = Pemilik::findOrFail($id);
+        $validated = $this->validatePemilik($request, $pemilik->User->iduser);
+
         $pemilik->update([
             'no_wa' => $validated['no_wa'],
             'alamat' => $validated['alamat'],

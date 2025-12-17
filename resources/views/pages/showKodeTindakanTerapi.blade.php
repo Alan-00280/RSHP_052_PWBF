@@ -71,7 +71,7 @@
                     <select name="idkategori" class="form-select text-black"  required>
                         @if ($kategories)
                         @foreach ($kategories as $kategori)
-                            <option value="{{ $kategori->idkategori }}" class="text-black" selected="{{ $kategori->idkategori == $tindakan_detail->Kategori->idkategori ? 'true' : 'false' }}">{{ $kategori->nama_kategori }}</option>
+                            <option value="{{ $kategori->idkategori }}" class="text-black" {{ $kategori->idkategori == $tindakan_detail->Kategori->idkategori ? 'selected' : '' }}>{{ $kategori->nama_kategori }}</option>
                         @endforeach
                         @endif
                     </select>
@@ -83,7 +83,7 @@
                     <select name="idkategori_klinis" class="form-select text-black" required>
                         @if ($kategori_klinises)
                         @foreach ($kategori_klinises as $kategori_klinis)
-                            <option value="{{ $kategori_klinis->idkategori_klinis }}" class="text-black" selected="{{ $tindakan_detail->KategoriKlinis->idkategori_klinis == $kategori_klinis->idkategori_klinis ? 'true' : 'false' }}">{{ $kategori_klinis->nama_kategori_klinis }}</option>
+                            <option value="{{ $kategori_klinis->idkategori_klinis }}" class="text-black" {{ $tindakan_detail->KategoriKlinis->idkategori_klinis == $kategori_klinis->idkategori_klinis ? 'selected' : '' }}>{{ $kategori_klinis->nama_kategori_klinis }}</option>
                         @endforeach
                         @endif
                     </select>

@@ -46,8 +46,8 @@ class validationController extends Controller
     }
 
     protected function validatePemilik(Request $request, $id=null) {
-        $uniqueRuleNama = $id ? 'unique:user,nama,'.$id.'iduser' : 'unique:user,nama';
-        $uniqueRuleEmail = $id ? 'unique:user,email,'.$id.'iduser' : 'unique:user,email';
+        $uniqueRuleNama = $id ? 'unique:user,nama,'.$id.',iduser' : 'unique:user,nama';
+        $uniqueRuleEmail = $id ? 'unique:user,email,'.$id.',iduser' : 'unique:user,email';
         return $request->validate([
             'nama' => 'string|min:3|required|max:255|'.$uniqueRuleNama,
             'email' => 'email|required|'.$uniqueRuleEmail,

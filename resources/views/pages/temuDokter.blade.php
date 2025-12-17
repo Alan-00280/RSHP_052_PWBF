@@ -180,6 +180,7 @@
 
                             {{-- <x-logger :object="$resepsionises" /> --}}
                             {{-- $login_user_role->RoleUser[0]->idrole == '1' ? 'true' : 'false' --}}
+                            @if ($login_user_role->RoleUser[0]->idrole == '1')
                             <select class="form-select text-black" id="input-resepsionis" name="idResepsionis" aria-label="Default select example" required>
                                 <option class="text-black" value="" selected="{{ $login_user_role->RoleUser[0]->idrole == '1' ? 'true' : 'false' }}">-- Pilih Resepsionis --</option>
                                 @if($resepsionises)
@@ -188,6 +189,13 @@
                                     @endforeach
                                 @endif
                             </select>
+                            @else
+                            <select class="form-select text-black" id="input-resepsionis" name="idResepsionis" aria-label="Default select example" disabled>
+                                <option class="text-black" value="{{ $login_user_role->RoleUser[0]->idrole_user }}" selected>{{ $login_user_role->nama }}</option>
+                            </select>
+                            <input type="hidden" name="idResepsionis" value="{{ $login_user_role->RoleUser[0]->idrole_user }}">
+                            @endif
+                            
                         </div>
                         <div class="mb-3"> <label for="input-pemilik" class="form-label">Pemilik</label> 
                             <select class="form-select text-black" id="input-pemilik" name="idPemilik" aria-label="Default select example" required>

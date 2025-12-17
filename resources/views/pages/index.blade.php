@@ -179,8 +179,8 @@
             interval
             } = data.current;
 
-            weather_card.style.background = '#000114'
-            weather_card.style.color = '#e7e7e7'
+            weather_card.style.background = is_day ? '#96cbff' : '#000114'
+            weather_card.style.color = is_day ? '#ffffff' : '#e7e7e7'
 
             const units = data.current_units;
             const is_day_icon = is_day ? `<span class="mdi mdi-weather-sunny" style="font-size: 2.5rem"></span>` : `<span class="mdi mdi-weather-night" style="font-size: 2.5rem"></span>`
