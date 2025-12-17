@@ -78,19 +78,19 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Warna Tanda</h6>
+                                    <h6 class="mb-0">Jenis - Ras</h6>
                                 </div>
                                 <div class="col-sm-9 text-black">
-                                    {{ $pet->warna_tanda }}
+                                    {{ $pet->nama_jenis_hewan }} - {{ $pet->nama_ras }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Jenis - Ras</h6>
+                                    <h6 class="mb-0">Warna Tanda</h6>
                                 </div>
                                 <div class="col-sm-9 text-black">
-                                    {{ $pet->nama_jenis_hewan }} - {{ $pet->nama_ras }}
+                                    {{ $pet->warna_tanda }}
                                 </div>
                             </div>
                             <hr>
@@ -117,12 +117,12 @@
                                     <h6 class="mb-0">Umur</h6>
                                 </div>
                                 <div class="col-sm-9 text-black">
-                                    @if ($umur_bulan > 0)
-                                    {{ $umur_bulan }} bulan 
-                                    @endif 
                                     @if ($umur_tahun > 0)
                                     {{ $umur_tahun }} tahun
                                     @endif
+                                    @if ($umur_bulan > 0)
+                                    {{ $umur_bulan }} bulan 
+                                    @endif 
                                 </div>
                             </div>
                         </div>

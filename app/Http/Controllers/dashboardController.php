@@ -31,12 +31,24 @@ class dashboardController extends Controller
         }
 
         $role_id = Session::get('role_id');
+        $total_pet = DB::select('SELECT COUNT(*) AS jumlah FROM pet');
+        $total_temu_dokter = DB::select('SELECT COUNT(*) AS jumlah FROM temu_dokter');
+        $total_rekam_medis = DB::select('SELECT COUNT(*) AS jumlah FROM rekam_medis');
+
+        if ($role_id == '5') {
+            $pemilik = Auth::user()->Pemilik;
+
+            $total_pet = DB::select('SELECT COUNT(*) AS jumlah FROM pet WHERE idpemilik = ?', [$pemilik->idpemilik]);
+            $total_temu_dokter = DB::select('SELECT COUNT(*) AS jumlah FROM temu_dokter WHERE idpet IN (SELECT idpet FROM pet WHERE idpemilik = ?)', [$pemilik->idpemilik]);
+            $total_rekam_medis = DB::select('SELECT COUNT(*) AS jumlah FROM rekam_medis WHERE idreservasi_dokter IN (SELECT idreservasi_dokter FROM temu_dokter WHERE idpet IN (SELECT idpet FROM pet WHERE idpemilik = ?))', [$pemilik->idpemilik]);
+        }
+
         return view('pages.index', [
             'role_id' => $role_id,
             'total_pemilik' => DB::select('SELECT COUNT(*) AS jumlah FROM pemilik'),
-            'total_pet' => DB::select('SELECT COUNT(*) AS jumlah FROM pet'),
-            'total_temu_dokter' => DB::select('SELECT COUNT(*) AS jumlah FROM temu_dokter'),
-            'total_rekam_medis' => DB::select('SELECT COUNT(*) AS jumlah FROM rekam_medis')
+            'total_pet' => $total_pet,
+            'total_temu_dokter' => $total_temu_dokter,
+            'total_rekam_medis' => $total_rekam_medis
         ]);
     }
 

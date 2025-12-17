@@ -67,7 +67,7 @@
                                         @endif</div>
                                     </div>
                                 @else
-                                    <span class="badge bg-secondary">Belum Pernah</span>
+                                    <span class="badge bg-secondary">Belum Ada</span>
                                 @endif
                             </td>
                         </tr>

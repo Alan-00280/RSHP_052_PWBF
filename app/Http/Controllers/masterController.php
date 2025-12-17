@@ -347,6 +347,10 @@ class masterController extends validationController
         try {
             $rekam_medis = RekamMedis::findOrFail($id);
             $rekam_medis->delete();
+            $temu_dokter = TemuDokter::find($rekam_medis->idreservasi_dokter);
+            $temu_dokter->update([
+                'status' => 'W'
+            ]);
             return redirect()->route('rekam-medis')->with('success', 'Berhasil menghapus');
         } catch (\Exception $e) {
             return redirect()->route('detil-rkm-medis', ['id' => $id])->with('error', 'Gagal menghapus: ' . $e->getMessage());

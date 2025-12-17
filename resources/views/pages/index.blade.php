@@ -76,16 +76,19 @@
         
         <div class="col-md-6 grid-margin transparent">
         <div class="row">
-            <div class="col-md-6 mb-4 stretch-card transparent">
-            <div class="card card-tale">
-                <div class="card-body">
-                    <h3 class="mb-4">Total Pemilik</h3>
-                    <p class="fs-30 mb-2"><span class="mdi mdi-account-tie" style="font-size: 2.5rem; margin-right: 5px;"></span>{{ $total_pemilik[0]->jumlah }}</p>
+            @if (!\in_array($role_id, ['5']))
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                <div class="card card-tale">
+                    <div class="card-body">
+                        <h3 class="mb-4">Total Pemilik</h3>
+                        <p class="fs-30 mb-2"><span class="mdi mdi-account-tie" style="font-size: 2.5rem; margin-right: 5px;"></span>{{ $total_pemilik[0]->jumlah }}</p>
+                    </div>
                 </div>
-            </div>
-            </div>
-            <div class="col-md-6 mb-4 stretch-card transparent">
-            <div class="card card-dark-blue">
+                </div>     
+            @endif
+
+            <div class="c l-md-6 mb-4 stretch-card transparent">
+            <div class="card card-dark-blue" style="{{ !\in_array($role_id, ['5']) ? '' : 'width: 100%' }}">
                 <div class="card-body">
                 <p class="mb-4">Total Pet</p>
                 <p class="fs-30 mb-2"><span class="mdi mdi-paw" style="font-size: 2.5rem; margin-right: 5px;"></span>{{ $total_pet[0]->jumlah }}</p>
