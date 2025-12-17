@@ -91,13 +91,13 @@ class masterController extends validationController
         //     'password' => 'min:3|required|max:126|string'
         // ]);
         // $password = $request->get('password');
-        // $password = bcrypt($password);
+        $password = bcrypt(Str::before($validated['email'], '@'));
 
         try {
             $user_create = UserRshp::create([
                 'nama' => $validated['nama'],
                 'email' => $validated['email'],
-                'password' => Str::before($validated['email'], '@')
+                'password' => $password
             ]);
 
             $pemilik_create = Pemilik::create([

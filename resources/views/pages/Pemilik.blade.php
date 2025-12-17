@@ -103,9 +103,9 @@
                                             <span class="mdi mdi-content-save-outline"></span> Update
                                         </button>
                                         <form action="#" id="delete-pemilik-{{ $pemilik->idpemilik }}"
-                                            name="delete-pemilik-{{ $pemilik->idpemilik }}" method="post">
-                                            <button form="pemilik-data-{{ $pemilik->idpemilik }}" type="submit"
-                                                class="btn btn-danger text-white"><span
+                                            name="delete-pemilik-{{ $pemilik->idpemilik }}" method="get">
+                                            <button form="delete-pemilik-{{ $pemilik->idpemilik }}" type="submit"
+                                                class="btn btn-danger text-white" disabled><span
                                                     class="mdi mdi-delete-outline"></span></button>
                                         </form>
                                         <button form="pemilik-data-{{ $pemilik->idpemilik }}" type="reset"
