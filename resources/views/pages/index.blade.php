@@ -87,8 +87,8 @@
                 </div>     
             @endif
 
-            <div class="c l-md-6 mb-4 stretch-card transparent">
-            <div class="card card-dark-blue" style="{{ !\in_array($role_id, ['5']) ? '' : 'width: 100%' }}">
+            <div class="col-md-6 mb-4 stretch-card transparent" style="{{ !\in_array($role_id, ['5']) ? '' : 'width: 100%' }}">
+            <div class="card card-dark-blue">
                 <div class="card-body">
                 <p class="mb-4">Total Pet</p>
                 <p class="fs-30 mb-2"><span class="mdi mdi-paw" style="font-size: 2.5rem; margin-right: 5px;"></span>{{ $total_pet[0]->jumlah }}</p>

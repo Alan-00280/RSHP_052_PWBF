@@ -283,7 +283,7 @@
             selectPet.innerHTML = `<option class="text-black" value="" selected>Loading . . .</option>`
             if (e.target.value) {
                 const idpemilik = e.target.value
-                const FetchPets = await fetch(`/get-pet/${idpemilik}`)
+                const FetchPets = await fetch(`/get-pet-belum-temu/${idpemilik}`)
                 const pets = await FetchPets.json()
 
                 // console.log(pets)

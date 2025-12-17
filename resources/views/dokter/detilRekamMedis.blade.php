@@ -119,7 +119,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label class="form-label">Kode Tindakan</label>
-                                <select name="idkode_tindakan_terapi" class="form-select text-black"  required>
+                                <select name="idkode_tindakan_terapi" class="form-select text-black" style=" word-wrap: break-word; white-space: normal;"  required>
                                     <option class="text-black" value="" selected>-- Pilih Tindakan --</option>
                                     @if ($tindakans)
                                     @foreach ($tindakans as $tindakan)

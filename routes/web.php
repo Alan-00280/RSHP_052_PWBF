@@ -130,6 +130,7 @@ Route::middleware('isResepsionis')->group(function () {
     Route::patch('/update-pet/{id}', [masterController::class, 'patchPet'])->name('update-pet');
     Route::post('/create-pet', [masterController::class, 'createPet'])->name('create-pet');
     Route::get('/get-pet/{id}', [masterController::class, 'getPetbyPemilik'])->name('get-pet-by-pemilik');
+    Route::get('/get-pet-belum-temu/{id}', [masterController::class, 'getPetUnDaftaredbyPemilik'])->name('get-petBelumTemu-by-pemilik');
 
     Route::post('/create-temu-dok', [masterController::class, 'createTemuDokter'])->name('create-temu-dokter');
     Route::delete('/delete-temu-dok/{id}', [masterController::class, 'deleteTemuDokter'])->name('delete-temu-dokter');

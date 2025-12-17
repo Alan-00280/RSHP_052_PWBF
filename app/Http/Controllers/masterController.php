@@ -454,4 +454,8 @@ class masterController extends validationController
             return redirect()->back()->with('error', 'Gagal mengupdate: ' . $e->getMessage());
         }
     }
+
+    public function getPetUnDaftaredbyPemilik(Request $request, $id) {
+        return response()->json(Pet::where('idpemilik', $id)->whereDoesntHave('temuDokter')->with(['RasHewan'])->get());
+    }
 }
